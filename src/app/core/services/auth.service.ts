@@ -1,6 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { User } from '../../shared/models/user';
+import { jwtDecode } from 'jwt-decode';
+
+const RoleMapping = {
+  SUPER_ADMIN: 'SFAB6c',
+  ADMIN: 'SHVpHQ',
+  PLAYER: 'SSwYVW'
+};
 
 @Injectable({
   providedIn: 'root',
@@ -67,5 +74,37 @@ export class AuthService {
           console.log(err);
         },
       });
+  }
+
+  getAccessToken() {
+    const access_token = sessionStorage.getItem('access_token');
+    return access_token;
+  }
+
+  getLoginStatus() {
+    const access_token = this.getAccessToken();
+    if (!access_token) return false;
+    return true;
+  }
+
+  getUserRole() {
+    const access_token = this.getAccessToken();
+    if (!access_token) return false;
+    const payload: any = jwtDecode(access_token);
+    
+    return this.getRoleFromMapping(payload.cap)
+  }
+
+  getRoleFromMapping(mappedRole: string) {
+    switch(mappedRole) {
+      case RoleMapping.SUPER_ADMIN:
+          return 'super-admin';
+      case RoleMapping.ADMIN:
+          return 'admin';
+      case RoleMapping.PLAYER:
+          return 'player';
+      default:
+          return 'Unknown role';
+    }
   }
 }

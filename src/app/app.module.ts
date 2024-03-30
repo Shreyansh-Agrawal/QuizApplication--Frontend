@@ -13,6 +13,9 @@ import { CategoryListComponent } from './shared/components/category-list/categor
 import { UserProfileComponent } from './shared/components/user-profile/user-profile.component';
 import { CategoryCardComponent } from './shared/components/category-list/category-card/category-card.component';
 import { UserListComponent } from './shared/components/user-list/user-list.component';
+import { MenubarModule } from 'primeng/menubar';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -26,13 +29,16 @@ import { UserListComponent } from './shared/components/user-list/user-list.compo
     CategoryListComponent,
     UserProfileComponent,
     CategoryCardComponent,
-    UserListComponent
+    UserListComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MenubarModule,
+    InputTextModule,
+    ButtonModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
