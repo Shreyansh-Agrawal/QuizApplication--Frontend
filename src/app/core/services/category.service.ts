@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Category } from '../../shared/models/Category';
+import { APIResponse } from '../../shared/models/APIResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -8,12 +11,15 @@ export class CategoryService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
   http = inject(HttpClient);
 
+  categoryList = new Subject<Category[]>()
+
   getAllCategories() {
     this.http
-      .get(`${this.baseURL}/categories`)
+      .get<APIResponse<Category[]>>(`${this.baseURL}/categories`)
       .subscribe({
         next: (res) => {
           console.log(res);
+          this.categoryList.next(res.data)
         },
         error: (err) => {
           console.log(err);

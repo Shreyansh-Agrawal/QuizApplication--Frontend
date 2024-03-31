@@ -1,0 +1,11 @@
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.category-card {
+    padding: 1rem;
+}

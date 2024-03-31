@@ -1,1 +1,50 @@
-<p>login works!</p>
+<div class="login-page">
+  <div class="app-login-form">
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="username"
+            type="text"
+            pInputText
+            name="username"
+            required
+            ngModel
+          />
+          <label for="username">Username</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="password"
+            type="password"
+            pInputText
+            name="password"
+            required
+            ngModel
+          />
+          <!-- <p-password
+            [toggleMask]="true"
+            id="password"
+            type="password"
+            name="password"
+            required
+            ngModel
+          ></p-password> -->
+          <label for="password">Password</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-group">
+        <p-button
+          label="Login"
+          type="submit"
+          [disabled]="!loginForm.valid"
+          class="submit-button"
+        ></p-button>
+      </div>
+    </form>
+  </div>
+
+  <img src="../../../../assets/sign-up.svg" alt="" />
+</div>

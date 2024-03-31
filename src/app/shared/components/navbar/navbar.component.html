@@ -1,16 +1,16 @@
 <div class="card">
-  <p-menubar [model]="items">
+  <p-menubar [model]="items" class="menu-bar">
     <ng-template pTemplate="start">
-      <img
-        src="https://primefaces.org/cdn/primeng/images/primeng.svg"
-        height="40"
-        class="mr-2"
-      />
+      <div class="logo-container">
+        <img src="./../../../../assets/logo.svg" height="40" class="logo" />
+      </div>
     </ng-template>
     <ng-template pTemplate="end">
-      <p-button label="Login" size="small" *ngIf="!isLoggedIn"></p-button>
-      <p-button label="SignUp" severity="success" size="small" *ngIf="!isLoggedIn"></p-button>
-      <p-button label="Logout" severity="danger" size="small" *ngIf="isLoggedIn"></p-button>
+      <div class="button-group" *ngIf="!isLoggedIn">
+        <p-button label="Login" size="small" (click)="login()"></p-button>
+        <p-button label="SignUp" severity="success" size="small" (click)="register()"></p-button>
+      </div>
+      <p-button label="Logout" severity="danger" size="small" *ngIf="isLoggedIn" (click)="logout()"></p-button>
     </ng-template>
   </p-menubar>
 </div>

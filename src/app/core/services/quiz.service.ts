@@ -1,5 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Subject } from 'rxjs';
+import { LeaderboardData } from '../../shared/models/leaderboardData';
+import { APIResponse } from '../../shared/models/APIResponse';
+import { Score } from '../../shared/models/score';
 
 @Injectable({
   providedIn: 'root',
@@ -8,10 +12,14 @@ export class QuizService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
   http = inject(HttpClient);
 
+  leaderboardData = new Subject<LeaderboardData[]>()
+  scores = new Subject<Score[]>()
+
   getLeaderboard() {
-    this.http.get(`${this.baseURL}/leaderboard`).subscribe({
+    this.http.get<APIResponse<LeaderboardData[]>>(`${this.baseURL}/leaderboard`).subscribe({
       next: (res) => {
         console.log(res);
+        this.leaderboardData.next(res.data)
       },
       error: (err) => {
         console.log(err);
@@ -20,9 +28,10 @@ export class QuizService {
   }
 
   getPlayerScores() {
-    this.http.get(`${this.baseURL}/scores/me`).subscribe({
+    this.http.get<APIResponse<Score[]>>(`${this.baseURL}/scores/me`).subscribe({
       next: (res) => {
         console.log(res);
+        this.scores.next(res.data)
       },
       error: (err) => {
         console.log(err);

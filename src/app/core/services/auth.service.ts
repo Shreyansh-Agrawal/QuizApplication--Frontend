@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { User } from '../../shared/models/user';
 import { jwtDecode } from 'jwt-decode';
+import { LoginData } from '../../shared/models/loginData';
+import { APIResponse } from '../../shared/models/APIResponse';
 
 const RoleMapping = {
   SUPER_ADMIN: 'SFAB6c',
@@ -47,9 +49,6 @@ export class AuthService {
   }
 
   logout() {
-    sessionStorage.removeItem('access_token');
-    sessionStorage.removeItem('refresh_token');
-
     this.http
       .post(`${this.baseURL}/logout`, null)
       .subscribe({
@@ -60,6 +59,9 @@ export class AuthService {
           console.log(err);
         },
       });
+
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('refresh_token');
   }
 
   refresh() {

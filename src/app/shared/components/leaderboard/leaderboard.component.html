@@ -1,1 +1,34 @@
-<p>leaderboard works!</p>
+<div class="card">
+    <p-table
+        [value]="leaderboard"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem', 'max-width': '50%', 'margin': 'auto' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 20]"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:25%">Rank</th>
+                <th style="width:25%">Username</th>
+                <th style="width:25%">Score</th>
+                <th style="width:25%">Time</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-leaderboard>
+            <tr>
+                <td>{{ 1 }}</td>
+                <td>{{ leaderboard.username }}</td>
+                <td>{{ leaderboard.score }}</td>
+                <td>{{ leaderboard.timestamp }}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>

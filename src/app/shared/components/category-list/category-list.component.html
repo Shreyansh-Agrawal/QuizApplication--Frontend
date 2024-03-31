@@ -1,1 +1,5 @@
-<p>category-list works!</p>
+<div class="category-list">
+    <div *ngFor="let category of categories" class="category-card">
+        <app-category-card [categoryName]="category.category_name" (click)="selectCategory(category)"></app-category-card>
+    </div>
+</div>

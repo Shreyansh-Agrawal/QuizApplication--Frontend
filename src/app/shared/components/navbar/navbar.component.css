@@ -1,0 +1,23 @@
+.button-group {
+  display: flex;
+  align-items: center;
+}
+
+.button-group p-button {
+  margin-right: 0.7rem;
+}
+
+/* .menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} */
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  margin-right: 0.7rem;
+}

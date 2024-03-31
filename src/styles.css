@@ -1,11 +1,15 @@
 @import "primeicons/primeicons.css";
 
-p-menubarsub{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+p-menubarsub {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
-a.p-menubar-button{
-    order: 3;
+a.p-menubar-button {
+  order: 3;
+}
+
+.p-button {
+  width: 100%;
 }

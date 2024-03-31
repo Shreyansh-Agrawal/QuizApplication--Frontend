@@ -1,1 +1,32 @@
-<p>player-scores works!</p>
+<div class="card">
+    <p-table
+        [value]="scores"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem', 'max-width': '50%', 'margin': 'auto' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 20]"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:25%">Rank</th>
+                <th style="width:25%">Score</th>
+                <th style="width:25%">Time</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-scores>
+            <tr>
+                <td>{{ 1 }}</td>
+                <td>{{ scores.score }}</td>
+                <td>{{ scores.timestamp }}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-table>
+</div>

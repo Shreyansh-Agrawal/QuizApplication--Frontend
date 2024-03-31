@@ -8,11 +8,12 @@ import { CategoryListComponent } from './shared/components/category-list/categor
 import { UserListComponent } from './shared/components/user-list/user-list.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
   { path: 'leaderboard', component: LeaderboardComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'categories', component: CategoryListComponent },
-  { path: 'users', component: UserListComponent },
+  { path: 'admins', component: UserListComponent },
+  { path: 'players', component: UserListComponent },
   {
     path: 'auth',
     loadChildren: () =>
