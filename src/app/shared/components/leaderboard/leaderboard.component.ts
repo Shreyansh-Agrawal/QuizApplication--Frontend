@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { QuizService } from '../../../core/services/quiz.service';
+import { LeaderboardData } from '../../models/leaderboard-data';
 
 @Component({
   selector: 'app-leaderboard',
@@ -8,44 +9,7 @@ import { QuizService } from '../../../core/services/quiz.service';
 })
 export class LeaderboardComponent implements OnInit {
   quizService = inject(QuizService);
-  leaderboard = [
-    {
-      player_id: 'PVJjQ6',
-      username: 'charlie123',
-      score: 100,
-      timestamp: '2024-01-30 09:49:41',
-    },
-    {
-      player_id: 'PLLhVX',
-      username: 'charlie1233',
-      score: 20,
-      timestamp: '2024-02-01 06:14:33',
-    },
-    {
-      player_id: 'PVJjQ6',
-      username: 'charlie123',
-      score: 100,
-      timestamp: '2024-01-30 09:49:41',
-    },
-    {
-      player_id: 'PLLhVX',
-      username: 'charlie1233',
-      score: 20,
-      timestamp: '2024-02-01 06:14:33',
-    },
-    {
-      player_id: 'PVJjQ6',
-      username: 'charlie123',
-      score: 100,
-      timestamp: '2024-01-30 09:49:41',
-    },
-    {
-      player_id: 'PLLhVX',
-      username: 'charlie1233',
-      score: 20,
-      timestamp: '2024-02-01 06:14:33',
-    },
-  ];
+  leaderboard: LeaderboardData[] = [];
   ngOnInit() {
     console.log('ng on init leaderboard comp');
     

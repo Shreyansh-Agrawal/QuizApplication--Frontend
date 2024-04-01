@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -7,6 +8,7 @@ import { Injectable, inject } from '@angular/core';
 export class QuestionService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
   http = inject(HttpClient);
+  messageService = inject(MessageService)
 
   getQuizData(categoryId: string) {
     let params = new HttpParams();
@@ -21,6 +23,7 @@ export class QuestionService {
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
   }
@@ -35,6 +38,7 @@ export class QuestionService {
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
   }
@@ -48,6 +52,7 @@ export class QuestionService {
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
   }
@@ -61,6 +66,7 @@ export class QuestionService {
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
   }
@@ -74,6 +80,7 @@ export class QuestionService {
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
   }

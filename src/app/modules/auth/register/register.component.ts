@@ -14,6 +14,7 @@ export class RegisterComponent {
 
   register() {
     const user_data = this.form?.value;
+    delete user_data['confirm-password']
     this.authService.register(user_data)
   }
 }

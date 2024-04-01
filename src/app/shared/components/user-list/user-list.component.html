@@ -1,4 +1,5 @@
-<div class="card">
+<app-loader *ngIf="this.userService.isLoading"></app-loader>
+<div class="card" *ngIf="!this.userService.isLoading">
     <p-table
         [value]="users"
         [paginator]="true"

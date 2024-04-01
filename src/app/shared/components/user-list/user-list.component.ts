@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { User } from '../../models/user';
 import { Router } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
@@ -8,33 +8,11 @@ import { UserService } from '../../../core/services/user.service';
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })
-export class UserListComponent {
+export class UserListComponent implements OnInit{
   router = inject(Router)
   userService = inject(UserService)
 
-  users: User[] = [
-    {
-      user_id: 'ABHrBm',
-      username: 'matty',
-      name: 'Mathew Murdock',
-      email: 'matty@example.com',
-      registration_date: '2024-02-10',
-    },
-    {
-      user_id: 'ABHrBm',
-      username: 'matty',
-      name: 'Mathew Murdock',
-      email: 'matty@example.com',
-      registration_date: '2024-02-10',
-    },
-    {
-      user_id: 'ABHrBm',
-      username: 'matty',
-      name: 'Mathew Murdock',
-      email: 'matty@example.com',
-      registration_date: '2024-02-10',
-    },
-  ];
+  users: User[] = [];
 
   ngOnInit() {
     const url = this.router.url;

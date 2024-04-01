@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { User } from '../../shared/models/user';
 import { Subject } from 'rxjs';
-import { APIResponse } from '../../shared/models/APIResponse';
+import { APIResponse } from '../../shared/models/api-response';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -10,40 +11,55 @@ import { APIResponse } from '../../shared/models/APIResponse';
 export class UserService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
   http = inject(HttpClient);
-
+  messageService = inject(MessageService)
+  isLoading = false;
   users = new Subject<User[]>()
+  profile = new Subject<User>()
 
   getUserProfile() {
-    this.http.get(`${this.baseURL}/profile/me`).subscribe({
+    this.isLoading = true;
+    this.http.get<APIResponse<User>>(`${this.baseURL}/profile/me`).subscribe({
       next: (res) => {
-        console.log(res);
+        this.profile.next(res.data);
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }
 
   getAllPlayers() {
+    this.isLoading = true;
     this.http.get<APIResponse<User[]>>(`${this.baseURL}/players`).subscribe({
       next: (res) => {
-        console.log(res);
         this.users.next(res.data);
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }
 
   getAllAdmins() {
+    this.isLoading = true;
     this.http.get<APIResponse<User[]>>(`${this.baseURL}/admins`).subscribe({
       next: (res) => {
-        console.log(res);
         this.users.next(res.data);
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }
@@ -55,6 +71,7 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
       },
     });
   }
@@ -66,6 +83,7 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
       },
     });
   }
@@ -77,6 +95,7 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
       },
     });
   }
@@ -88,6 +107,7 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
       },
     });
   }
@@ -99,6 +119,7 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
       },
     });
   }

@@ -1,4 +1,5 @@
-<div class="card">
+<app-loader *ngIf="this.quizService.isLoading"></app-loader>
+<div class="card" *ngIf="!this.quizService.isLoading">
     <p-table
         [value]="scores"
         [paginator]="true"

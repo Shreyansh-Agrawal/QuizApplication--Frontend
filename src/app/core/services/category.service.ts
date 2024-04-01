@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Category } from '../../shared/models/Category';
-import { APIResponse } from '../../shared/models/APIResponse';
+import { Category } from '../../shared/models/category';
+import { APIResponse } from '../../shared/models/api-response';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -10,34 +11,47 @@ import { APIResponse } from '../../shared/models/APIResponse';
 export class CategoryService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
   http = inject(HttpClient);
-
-  categoryList = new Subject<Category[]>()
+  messageService = inject(MessageService);
+  isLoading = false;
+  categoryList = new Subject<Category[]>();
 
   getAllCategories() {
+    this.isLoading = true;
     this.http
       .get<APIResponse<Category[]>>(`${this.baseURL}/categories`)
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.categoryList.next(res.data)
+          this.categoryList.next(res.data);
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: err.error.message,
+            detail: '',
+          });
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }
 
   createCategory(categoryName: string) {
-    this.http
-      .post(`${this.baseURL}/categories`, categoryName)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    this.http.post(`${this.baseURL}/categories`, categoryName).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
+      },
+    });
   }
 
   updateCategory(categoryId: string, categoryName: string) {
@@ -49,20 +63,28 @@ export class CategoryService {
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: err.error.message,
+            detail: '',
+          });
         },
       });
   }
 
   deleteCategory(categoryId: string) {
-    this.http
-      .delete(`${this.baseURL}/categories/${categoryId}`)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
+    this.http.delete(`${this.baseURL}/categories/${categoryId}`).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
+      },
+    });
   }
 }

@@ -1,19 +1,35 @@
 import { Component, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   @ViewChild('loginForm') form: NgForm | undefined;
-
-  authService = inject(AuthService)
+  loading = false;
+  authService = inject(AuthService);
+  router = inject(Router);
 
   login() {
-    const login_data = this.form?.value;
-    this.authService.login(login_data)
+    this.loading = true;
+    const loginData = this.form?.value;
+    this.authService.login(loginData);
+
+    this.authService.loginSuccess.subscribe({
+      next: () => {
+        this.loading = false;
+        this.router.navigateByUrl('leaderboard')
+      },
+    });
+
+    this.authService.errorSubject.subscribe({
+      next: () => {
+        this.loading = false;
+      },
+    });
   }
 }

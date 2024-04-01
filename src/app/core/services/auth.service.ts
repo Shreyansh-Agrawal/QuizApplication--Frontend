@@ -2,8 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { User } from '../../shared/models/user';
 import { jwtDecode } from 'jwt-decode';
-import { LoginData } from '../../shared/models/loginData';
-import { APIResponse } from '../../shared/models/APIResponse';
+import { LoginData } from '../../shared/models/login-data';
+import { APIResponse } from '../../shared/models/api-response';
+import { Subject } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { RefreshData } from '../../shared/models/refresh-data';
 
 const RoleMapping = {
   SUPER_ADMIN: 'SFAB6c',
@@ -16,8 +19,15 @@ const RoleMapping = {
 })
 export class AuthService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
-  http = inject(HttpClient);
+  // http = inject(HttpClient);
+  messageService = inject(MessageService)
+  loginSuccess = new Subject<void>();
+  errorSubject = new Subject<void>();
+  refreshIntervalId: number = 0;
 
+  constructor(private http: HttpClient) {
+    this.refresh = this.refresh.bind(this);
+  }
   register(userData: User) {
     this.http
       .post(`${this.baseURL}/register`, userData)
@@ -27,6 +37,7 @@ export class AuthService {
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
   }
@@ -36,27 +47,34 @@ export class AuthService {
       .post<APIResponse<LoginData>>(`${this.baseURL}/login`, loginData)
       .subscribe({
         next: (res) => {
+          this.messageService.add({ severity: 'success', summary: res.message, detail: 'Welcome to SmartQuiz' });
+
           const { access_token, refresh_token, password_type } = res.data;
           sessionStorage.setItem('access_token', access_token);
           sessionStorage.setItem('refresh_token', refresh_token);
-
-          console.log(`Logged in success, password type: ${password_type}`);
+          this.loginSuccess.next();
+          this.refreshIntervalId = setInterval(this.refresh, 14*60*1000);
         },
         error: (err) => {
           console.log(err);
+          this.errorSubject.next();
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: 'Try different credentials or sign up...' });
         },
       });
   }
 
   logout() {
     this.http
-      .post(`${this.baseURL}/logout`, null)
+      .post<APIResponse<void>>(`${this.baseURL}/logout`, null)
       .subscribe({
         next: (res) => {
           console.log(res);
+          this.messageService.add({ severity: 'success', summary: res.message });
+          clearInterval(this.refreshIntervalId);
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
 
@@ -65,15 +83,23 @@ export class AuthService {
   }
 
   refresh() {
+    console.log('refresh func called');
+    
     this.http
-      .post<APIResponse<LoginData>>(`${this.baseURL}/refresh`, null)
+      .post<APIResponse<RefreshData>>(`${this.baseURL}/refresh`, null)
       .subscribe({
         next: (res) => {
-          const { access_token } = res.data;
+          console.log(res);
+          
+          const { access_token, refresh_token } = res.data;
           sessionStorage.setItem('access_token', access_token);
+          sessionStorage.setItem('refresh_token', refresh_token);
+          console.log('new access token set');
+
         },
         error: (err) => {
           console.log(err);
+          this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
   }
@@ -91,7 +117,7 @@ export class AuthService {
 
   getUserRole() {
     const access_token = this.getAccessToken();
-    if (!access_token) return false;
+    if (!access_token) return '';
     const payload: any = jwtDecode(access_token);
     
     return this.getRoleFromMapping(payload.cap)

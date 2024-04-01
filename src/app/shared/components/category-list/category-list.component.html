@@ -1,4 +1,5 @@
-<div class="category-list">
+<app-loader *ngIf="this.categoryService.isLoading"></app-loader>
+<div class="category-list" *ngIf="!this.categoryService.isLoading">
     <div *ngFor="let category of categories" class="category-card">
         <app-category-card [categoryName]="category.category_name" (click)="selectCategory(category)"></app-category-card>
     </div>

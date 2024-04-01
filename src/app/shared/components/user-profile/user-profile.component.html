@@ -1,1 +1,108 @@
-<p>user-profile works!</p>
+<app-loader *ngIf="this.userService.isLoading"></app-loader>
+<div class="profile-page" *ngIf="!this.userService.isLoading">
+  <img src="../../../../assets/profile.svg" alt="" />
+  <div class="app-profile-form">
+    <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="name"
+            type="text"
+            pInputText
+            name="name"
+            required
+            [(ngModel)]="name"
+          />
+          <label for="name">Name</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="email"
+            type="text"
+            pInputText
+            name="email"
+            required
+            email
+            [(ngModel)]="email"
+          />
+          <label for="email">Email</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="username"
+            type="text"
+            pInputText
+            name="username"
+            required
+            [(ngModel)]="username"
+          />
+          <label for="username">Username</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="registration-date"
+            type="text"
+            pInputText
+            name="registration-date"
+            required
+            [(ngModel)]="registrationDate"
+            disabled="true"
+          />
+          <label for="registration-date">Created on</label>
+        </p-floatLabel>
+      </div>
+      <!-- <div class="form-group">
+        <p-floatLabel>
+          <p-calendar
+            id="registration-date"
+            name="registration-date"
+            [(ngModel)]="registrationDate"
+          ></p-calendar>
+          <label for="registration-date">Created on</label>
+        </p-floatLabel>
+      </div> -->
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="password"
+            type="password"
+            pInputText
+            name="password"
+            required
+            ngModel
+          />
+          <label for="password">New Password</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="confirm-password"
+            type="password"
+            pInputText
+            name="confirm-password"
+            required
+            ngModel
+          />
+          <label for="confirm-password">Confirm Password</label>
+        </p-floatLabel>
+      </div>
+      <div class="form-group">
+        <p-button
+          label="Update Profile"
+          type="submit"
+          [disabled]="!!profileForm.valid"
+          [loading]="loading"
+          severity="success"
+          class="submit-button"
+        ></p-button>
+      </div>
+    </form>
+  </div>
+</div>
