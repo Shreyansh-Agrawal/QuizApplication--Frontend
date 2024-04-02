@@ -1,38 +1,33 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './shared/components/home/home.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
-import { LeaderboardComponent } from './shared/components/leaderboard/leaderboard.component';
-import { UserProfileComponent } from './shared/components/user-profile/user-profile.component';
-import { CategoryListComponent } from './shared/components/category-list/category-list.component';
-import { UserListComponent } from './shared/components/user-list/user-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
-  { path: 'leaderboard', component: LeaderboardComponent },
-  { path: 'profile', component: UserProfileComponent },
-  { path: 'categories', component: CategoryListComponent },
-  { path: 'admins', component: UserListComponent },
-  { path: 'players', component: UserListComponent },
   {
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/auth.module').then((mod) => mod.AuthModule),
   },
   {
-    path: 'admin',
+    path: 'category',
     loadChildren: () =>
-      import('./modules/admin/admin.module').then((mod) => mod.AdminModule),
+      import('./modules/category/category.module').then((mod) => mod.CategoryModule),
   },
   {
-    path: 'player',
+    path: 'question',
     loadChildren: () =>
-      import('./modules/player/player.module').then((mod) => mod.PlayerModule),
+      import('./modules/question/question.module').then((mod) => mod.QuestionModule),
   },
   {
-    path: 'super-admin',
+    path: 'quiz',
     loadChildren: () =>
-      import('./modules/super-admin/super-admin.module').then((mod) => mod.SuperAdminModule),
+      import('./modules/quiz/quiz.module').then((mod) => mod.QuizModule),
+  },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('./modules/user/user.module').then((mod) => mod.UserModule),
   },
   { path: '**', component: PageNotFoundComponent },
 ];

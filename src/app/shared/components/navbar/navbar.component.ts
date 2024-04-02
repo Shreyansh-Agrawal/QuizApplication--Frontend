@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
         label: 'Admins',
         icon: 'pi pi-fw pi-users',
         visible: this.role == 'super-admin' && this.isLoggedIn,
-        routerLink: 'admins',
+        routerLink: 'user/admins',
         routerLinkActiveOptions: { exact: true }
       },
       {
@@ -42,49 +42,49 @@ export class NavbarComponent implements OnInit {
         visible:
           (this.role === 'admin' ||
           this.role === 'super-admin') && this.isLoggedIn,
-        routerLink: 'players',
+        routerLink: 'user/players',
         routerLinkActiveOptions: { exact: true }
       },
       {
         label: 'Categories',
         icon: 'pi pi-fw pi-file',
         visible: this.isLoggedIn,
-        routerLink: 'categories',
+        routerLink: 'category/category-list',
         routerLinkActiveOptions: { exact: true }
       },
       {
         label: 'Questions',
         icon: 'pi pi-fw pi-file',
         visible: this.role == 'admin' && this.isLoggedIn,
-        routerLink: 'admin/questions',
+        routerLink: 'question/question-list',
         routerLinkActiveOptions: { exact: true }
       },
       {
         label: 'Leaderboard',
         icon: 'pi pi-fw pi-table',
         visible: this.isLoggedIn,
-        routerLink: 'leaderboard',
+        routerLink: 'quiz/leaderboard',
         routerLinkActiveOptions: { exact: true }
       },
       {
         label: 'Take Quiz',
         icon: 'pi pi-fw pi-pencil',
         visible: this.role == 'player' && this.isLoggedIn,
-        routerLink: 'player/quiz',
+        routerLink: 'quiz/play',
         routerLinkActiveOptions: { exact: true }
       },
       {
         label: 'My Scores',
         icon: 'pi pi-fw pi-history',
         visible: this.role == 'player' && this.isLoggedIn,
-        routerLink: 'player/scores',
+        routerLink: 'quiz/scores',
         routerLinkActiveOptions: { exact: true }
       },
       {
         label: 'Profile',
         icon: 'pi pi-fw pi-user',
         visible: this.isLoggedIn,
-        routerLink: 'profile',
+        routerLink: 'user/profile',
         routerLinkActiveOptions: { exact: true }
       },
     ];
