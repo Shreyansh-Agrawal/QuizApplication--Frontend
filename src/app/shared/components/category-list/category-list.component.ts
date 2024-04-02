@@ -12,7 +12,6 @@ export class CategoryListComponent implements OnInit {
   categories: Category[] | undefined
 
   ngOnInit() {
-    console.log('ng on init category comp');
     this.categoryService.getAllCategories();
     this.categoryService.categoryList.subscribe({
       next: (res) => {

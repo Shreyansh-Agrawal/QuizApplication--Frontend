@@ -10,9 +10,8 @@ import { LeaderboardData } from '../../models/leaderboard-data';
 export class LeaderboardComponent implements OnInit {
   quizService = inject(QuizService);
   leaderboard: LeaderboardData[] = [];
+
   ngOnInit() {
-    console.log('ng on init leaderboard comp');
-    
     this.quizService.getLeaderboard()
     this.quizService.leaderboardData.subscribe({
       next: (res) => {

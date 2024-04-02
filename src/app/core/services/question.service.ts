@@ -1,6 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Subject } from 'rxjs';
+import { APIResponse } from '../../shared/models/api-response';
+import { QuizData } from '../../shared/models/quiz-data';
 
 @Injectable({
   providedIn: 'root',
@@ -9,21 +12,27 @@ export class QuestionService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
   http = inject(HttpClient);
   messageService = inject(MessageService)
+  questionList = new Subject<QuizData[]>();
+  isLoading = false;
 
-  getQuizData(categoryId: string) {
+  getQuizData(categoryId?: string ) {
+    this.isLoading = true;
     let params = new HttpParams();
     if (categoryId) {
       params = params.set('category_id', categoryId);
     }
     this.http
-      .get(`${this.baseURL}/categories/questions`, { params })
+      .get<APIResponse<QuizData[]>>(`${this.baseURL}/categories/questions`, { params })
       .subscribe({
         next: (res) => {
-          console.log(res);
+          this.questionList.next(res.data);
         },
         error: (err) => {
           console.log(err);
           this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

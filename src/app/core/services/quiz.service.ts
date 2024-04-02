@@ -5,6 +5,7 @@ import { LeaderboardData } from '../../shared/models/leaderboard-data';
 import { APIResponse } from '../../shared/models/api-response';
 import { Score } from '../../shared/models/score';
 import { MessageService } from 'primeng/api';
+import { QuizQuestion } from '../../shared/models/quiz-question';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class QuizService {
 
   leaderboardData = new Subject<LeaderboardData[]>()
   scores = new Subject<Score[]>()
+  quizQuestions = new Subject<QuizQuestion[]>()
   isLoading = false;
 
   getLeaderboard() {
@@ -56,9 +58,9 @@ export class QuizService {
     if (questionType) params = params.append('question_type', questionType);
     if (limit) params = params.append('limit', limit);
     this.isLoading = true;
-    this.http.get(`${this.baseURL}/quiz`, { params }).subscribe({
+    this.http.get<APIResponse<QuizQuestion[]>>(`${this.baseURL}/quiz`, { params }).subscribe({
       next: (res) => {
-        console.log(res);
+        this.quizQuestions.next(res.data);
       },
       error: (err) => {
         console.log(err);

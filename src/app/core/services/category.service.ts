@@ -21,7 +21,6 @@ export class CategoryService {
       .get<APIResponse<Category[]>>(`${this.baseURL}/categories`)
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.categoryList.next(res.data);
         },
         error: (err) => {

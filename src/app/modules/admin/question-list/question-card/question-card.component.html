@@ -1,1 +1,16 @@
-<p>question-card works!</p>
+<div class="question-card">
+    <p-card header={{question.question_text}}>
+        <p class="m-0">
+            <p-tag value={{question.question_type}}></p-tag>
+        </p>
+        <p *ngIf="question.options.other_options.length!==0">
+            1. {{question.options.answer}}
+        </p>
+        <p class="m-0" *ngFor="let option of question.options.other_options; let i = index">
+            {{i+2}}. {{option}}
+        </p>
+        <p class="answer">
+            Answer: {{question.options.answer}}
+        </p>
+    </p-card>
+</div>

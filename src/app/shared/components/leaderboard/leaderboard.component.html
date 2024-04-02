@@ -1,11 +1,11 @@
 <app-loader *ngIf="this.quizService.isLoading"></app-loader>
-<div class="card" *ngIf="!this.quizService.isLoading">
+<div class="leaderboard-card" *ngIf="!this.quizService.isLoading">
     <p-table
         [value]="leaderboard"
         [paginator]="true"
-        [rows]="10"
+        [rows]="5"
         [showCurrentPageReport]="true"
-        [tableStyle]="{ 'min-width': '50rem', 'max-width': '50%', 'margin': 'auto' }"
+        [tableStyle]="{ 'min-width': '50rem'}"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[5, 10, 20]"
     >
@@ -17,9 +17,9 @@
                 <th style="width:25%">Time</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-leaderboard>
+        <ng-template pTemplate="body" let-leaderboard let-rowIndex="rowIndex">
             <tr>
-                <td>{{ 1 }}</td>
+                <td>{{ rowIndex + 1 }}</td>
                 <td>{{ leaderboard.username }}</td>
                 <td>{{ leaderboard.score }}</td>
                 <td>{{ leaderboard.timestamp }}</td>

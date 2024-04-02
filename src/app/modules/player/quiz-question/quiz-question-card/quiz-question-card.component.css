@@ -1,0 +1,9 @@
+.options {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.options-container {
+    padding: 1rem;
+}

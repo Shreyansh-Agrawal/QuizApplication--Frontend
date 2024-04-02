@@ -19,9 +19,9 @@ const RoleMapping = {
 })
 export class AuthService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
-  // http = inject(HttpClient);
   messageService = inject(MessageService)
   loginSuccess = new Subject<void>();
+  successSubject = new Subject<string>();
   errorSubject = new Subject<void>();
   refreshIntervalId: number = 0;
 
@@ -30,13 +30,16 @@ export class AuthService {
   }
   register(userData: User) {
     this.http
-      .post(`${this.baseURL}/register`, userData)
+      .post<APIResponse<void>>(`${this.baseURL}/register`, userData)
       .subscribe({
         next: (res) => {
           console.log(res);
+          this.messageService.add({ severity: 'success', summary: res.message, detail: 'Please log in...' });
+          this.successSubject.next('register');
         },
         error: (err) => {
           console.log(err);
+          this.errorSubject.next();
           this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
@@ -68,7 +71,6 @@ export class AuthService {
       .post<APIResponse<void>>(`${this.baseURL}/logout`, null)
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.messageService.add({ severity: 'success', summary: res.message });
           clearInterval(this.refreshIntervalId);
         },

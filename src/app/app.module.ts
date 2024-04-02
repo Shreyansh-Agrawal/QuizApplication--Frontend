@@ -31,7 +31,7 @@ import { SnackbarComponent } from './utils/snackbar/snackbar.component';
     CategoryListComponent,
     UserProfileComponent,
     CategoryCardComponent,
-    UserListComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

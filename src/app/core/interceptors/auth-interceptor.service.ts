@@ -17,7 +17,6 @@ export class AuthInterceptorService implements HttpInterceptor {
       return next.handle(authorizedRequest);
     }
     else {
-      console.log('Auth interceptor called');
       const access_token = sessionStorage.getItem('access_token');
       const authorizedRequest = req.clone({
         headers: req.headers.append('Authorization', `Bearer ${access_token}`),

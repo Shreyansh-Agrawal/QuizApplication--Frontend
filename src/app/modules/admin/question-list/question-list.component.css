@@ -1,0 +1,31 @@
+.select-category {
+    display: flex;
+    padding: 2rem;
+    padding-left: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.questions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.questions-page {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    width: 60%;
+    margin: auto;
+}
+
+.accordian {
+    /* margin: auto; */
+    /* width: 60%; */
+}
+
+.search-autocomplete {
+    display: flex;
+    justify-content: flex-start;
+}

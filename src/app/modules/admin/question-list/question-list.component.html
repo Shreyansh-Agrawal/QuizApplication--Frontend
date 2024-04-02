@@ -1,1 +1,40 @@
-<p>question-list works!</p>
+<app-loader *ngIf="this.questionService.isLoading"></app-loader>
+<div class="questions-page" *ngIf="!this.questionService.isLoading">
+  <div class="search-autocomplete">
+    <div class="select-category">
+      <p-autoComplete
+        [(ngModel)]="selectedCategory"
+        [dropdown]="true"
+        [suggestions]="filteredCategories"
+        (completeMethod)="filterCategory($event)"
+        field="category"
+        placeholder="category"
+      ></p-autoComplete>
+    </div>
+    <div class="select-category">
+      <p-autoComplete
+        [(ngModel)]="selectedQuestion"
+        [dropdown]="true"
+        [suggestions]="filteredQuestions"
+        (completeMethod)="filterQuestion($event)"
+        field="category"
+        placeholder="question"
+      ></p-autoComplete>
+    </div>
+  </div>
+  <div class="questions">
+    <p-accordion [multiple]="true" [activeIndex]="[0]">
+      <div class="accordian">
+        <p-accordionTab
+          *ngFor="let category of categories"
+          header="{{ category.category }}"
+        >
+          <app-question-card
+            *ngFor="let question of category.question_data"
+            [question]="question"
+          ></app-question-card>
+        </p-accordionTab>
+      </div>
+    </p-accordion>
+  </div>
+</div>

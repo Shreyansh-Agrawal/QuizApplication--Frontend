@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryListComponent } from '../../shared/components/category-list/category-list.component';
 import { UserListComponent } from '../../shared/components/user-list/user-list.component';
+import { SharedModule } from '../../shared/shared.module';
 import { CreateCategoryComponent } from './create-category/create-category.component';
 import { CreateQuestionComponent } from './create-question/create-question.component';
 import { QuestionCardComponent } from './question-list/question-card/question-card.component';
@@ -27,6 +28,6 @@ const routes: Routes = [
     QuestionListComponent,
     QuestionCardComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
 })
 export class AdminModule {}

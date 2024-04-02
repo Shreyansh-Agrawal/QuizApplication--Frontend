@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { QuizQuestion } from '../../../../shared/models/quiz-question';
 
 @Component({
   selector: 'app-quiz-question-card',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './quiz-question-card.component.css'
 })
 export class QuizQuestionCardComponent {
-
+  @Input() question: QuizQuestion | undefined;
+  ingredient!: string;
 }

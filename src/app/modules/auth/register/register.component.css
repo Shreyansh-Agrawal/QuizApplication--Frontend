@@ -35,3 +35,7 @@ input {
 .password {
     margin-right: 1rem;
 }
+
+::ng-deep .p-button{
+  width: 100%;
+}
