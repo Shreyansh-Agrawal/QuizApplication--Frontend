@@ -11,15 +11,17 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { LoaderComponent } from '../utils/loader/loader.component';
+import { SliceWordsPipe } from './pipes/slice-words.pipe';
 
 @NgModule({
-  declarations: [LoaderComponent],
+  declarations: [LoaderComponent, SliceWordsPipe],
   imports: [ProgressSpinnerModule, AccordionModule],
   exports: [
     AccordionModule,
@@ -33,12 +35,14 @@ import { LoaderComponent } from '../utils/loader/loader.component';
     FormsModule,
     InputTextModule,
     PasswordModule,
+    ProgressBarModule,
     ProgressSpinnerModule,
     RadioButtonModule,
     TableModule,
     TagModule,
     ToastModule,
     LoaderComponent,
+    SliceWordsPipe
   ],
 })
 export class SharedModule {}

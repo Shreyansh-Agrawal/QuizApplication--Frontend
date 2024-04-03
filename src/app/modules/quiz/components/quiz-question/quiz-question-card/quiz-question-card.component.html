@@ -1,21 +1,22 @@
-<p-card header={{question?.question_text}}>
-    <div *ngIf="question?.question_type?.toLowerCase() === 'mcq'">
-        <p class="m-0" *ngFor="let option of question?.options">
-            {{option}}
-        </p>
-    </div>
-    <div *ngIf="question?.question_type?.toLowerCase() === 'one-word'">
-        <input type="text" pInputText ngModel />
-    </div>
-    <div class="options-container" *ngIf="question?.question_type?.toLowerCase() === 'true-false'">
-        <div class="options">
-            <p-radioButton name="true-false" value="true" [(ngModel)]="ingredient" inputId="true"></p-radioButton>
-            <label for="true">True</label>
+<div class="question-card">
+    <p-card header={{question?.question_text}}>
+        <div *ngIf="question?.question_type?.toLowerCase() === 'mcq'">
+            <p class="m-0" *ngFor="let option of question?.options">
+                {{option}}
+            </p>
         </div>
-        <div class="options">
-            <p-radioButton name="true-false" value="false" [(ngModel)]="ingredient" inputId="false"></p-radioButton>
-            <label for="false">False</label>
+        <div *ngIf="question?.question_type?.toLowerCase() === 'one-word'">
+            <input type="text" pInputText ngModel />
         </div>
-    </div>
-    
-</p-card>
+        <div class="options-container" *ngIf="question?.question_type?.toLowerCase() === 'true-false'">
+            <div class="options">
+                <p-radioButton name="true-false" value="true" [(ngModel)]="ingredient" inputId="true"></p-radioButton>
+                <label for="true">True</label>
+            </div>
+            <div class="options">
+                <p-radioButton name="true-false" value="false" [(ngModel)]="ingredient" inputId="false"></p-radioButton>
+                <label for="false">False</label>
+            </div>
+        </div>
+    </p-card>
+</div>

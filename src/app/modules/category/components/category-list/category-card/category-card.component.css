@@ -1,0 +1,45 @@
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+}
+
+:host::ng-deep .btn {
+  margin-right: 1rem;
+}
+
+:host::ng-deep .p-card {
+  border-top: 5px solid #209cee;
+}
+
+.category-name {
+  font-size: x-large;
+  font-weight: 600;
+  width: 50%;
+  /* padding: 1rem; */
+}
+
+.card {
+  display: flex;
+  width: 25rem;
+  height: 5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+img {
+  width: 200px;
+  height: 300px;
+  object-fit: contain;
+}
+
+.custom-design {
+  background-color: #f0f0f0;
+  border-radius: 0 0 10px 10px;
+  padding: 10px;
+  width: 50%;
+}
+
+.custom-design-content {
+  text-align: center;
+}

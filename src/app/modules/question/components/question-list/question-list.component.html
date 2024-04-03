@@ -17,7 +17,7 @@
         [dropdown]="true"
         [suggestions]="filteredQuestions"
         (completeMethod)="filterQuestion($event)"
-        field="category"
+        field="question_text"
         placeholder="question"
       ></p-autoComplete>
     </div>
@@ -26,11 +26,11 @@
     <p-accordion [multiple]="true" [activeIndex]="[0]">
       <div class="accordian">
         <p-accordionTab
-          *ngFor="let category of categories"
-          header="{{ category.category }}"
+          *ngFor="let item of quizData"
+          header="{{ item.category }}"
         >
           <app-question-card
-            *ngFor="let question of category.question_data"
+            *ngFor="let question of item.question_data"
             [question]="question"
           ></app-question-card>
         </p-accordionTab>
@@ -38,3 +38,5 @@
     </p-accordion>
   </div>
 </div>
+<p>{{selectedCategory?.category}}</p>
+<p>{{selectedQuestion?.question_text}}</p>

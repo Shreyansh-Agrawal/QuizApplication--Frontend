@@ -1,9 +1,17 @@
-<p-card header="{{categoryName}}" [style]="{ width: '20rem', height: '20rem' }">
-    <ng-template pTemplate="header">
-        <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <!-- <p-button label="Save" icon="pi pi-check"></p-button>
-        <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button> -->
-    </ng-template>
+<p-card>
+  <div class="card">
+    <div class="category-name">{{ category?.category_name | sliceWords : 0 : 28 }}</div>
+    <div class="btn-group" *ngIf="this.userRoleIsAdmin()">
+      <p-button styleClass="btn" icon="pi pi-pencil" severity="warning" (click)="this.updateEvent.emit(category)">
+      </p-button>
+      <p-button icon="pi pi-trash" severity="danger" (click)="this.deleteEvent.emit(category)"> </p-button>
+    </div>
+    <div class="custom-design" *ngIf="!this.userRoleIsAdmin()">
+      <div class="custom-design-content">
+        <span>Click anywhere to start the Quiz</span>
+      </div>
+    </div>
+  </div>
 </p-card>
+
+<!-- display the admin id somewhere maybe in a tag -->

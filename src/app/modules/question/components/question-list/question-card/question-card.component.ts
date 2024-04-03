@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Question } from '../../../models/question.model';
 
 @Component({
   selector: 'app-question-card',
@@ -6,6 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './question-card.component.css'
 })
 export class QuestionCardComponent {
-  @Input() question: any;
+  @Input() question: Question | undefined;
 
 }

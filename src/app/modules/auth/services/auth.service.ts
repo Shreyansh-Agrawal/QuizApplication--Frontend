@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { jwtDecode } from 'jwt-decode';
 import { LoginResponse } from '../models/login-response.model';
 import { APIResponse } from '../../../shared/models/api-response.model';
 import { Subject } from 'rxjs';
@@ -8,13 +7,7 @@ import { MessageService } from 'primeng/api';
 import { RefreshResponse } from '../models/refresh-response.model';
 import { RegistrationForm } from '../models/register-form.model';
 import { LoginForm } from '../models/login-form.model';
-import { TokenPayload } from '../models/token-payload.model';
 
-const RoleMapping = {
-  SUPER_ADMIN: 'SFAB6c',
-  ADMIN: 'SHVpHQ',
-  PLAYER: 'SSwYVW'
-};
 
 @Injectable({
   providedIn: 'root',
@@ -106,37 +99,5 @@ export class AuthService {
           this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
         },
       });
-  }
-
-  getAccessToken() {
-    const access_token = sessionStorage.getItem('access_token');
-    return access_token;
-  }
-
-  getLoginStatus() {
-    const access_token = this.getAccessToken();
-    if (!access_token) return false;
-    return true;
-  }
-
-  getUserRole() {
-    const access_token = this.getAccessToken();
-    if (!access_token) return '';
-    const payload: TokenPayload = jwtDecode(access_token);
-    
-    return this.getRoleFromMapping(payload.cap)
-  }
-
-  getRoleFromMapping(mappedRole: string) {
-    switch(mappedRole) {
-      case RoleMapping.SUPER_ADMIN:
-          return 'super-admin';
-      case RoleMapping.ADMIN:
-          return 'admin';
-      case RoleMapping.PLAYER:
-          return 'player';
-      default:
-          return 'Unknown role';
-    }
   }
 }

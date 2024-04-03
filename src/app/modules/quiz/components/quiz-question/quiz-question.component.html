@@ -1,11 +1,15 @@
 <app-loader *ngIf="this.quizService.isLoading"></app-loader>
-<form (ngSubmit)="submitQuiz()" #quizForm="ngForm" *ngIf="!this.quizService.isLoading">
-    <app-quiz-question-card *ngFor="let question of quizQuestions" [question]="question"></app-quiz-question-card>
+<div class="quiz-page" *ngIf="!this.quizService.isLoading">
+  <div class="quiz-timer">
+    <p-progressBar [value]="10"></p-progressBar>
+  </div>
+  <form (ngSubmit)="submitQuiz()" #quizForm="ngForm">
+    <app-quiz-question-card
+      *ngFor="let question of quizQuestions"
+      [question]="question"
+    ></app-quiz-question-card>
     <div class="form-group">
-        <p-button
-          label="Submit"
-          type="submit"
-          class="submit-button"
-        ></p-button>
-      </div>
-</form>
+      <p-button label="Submit" type="submit" class="submit-button"></p-button>
+    </div>
+  </form>
+</div>

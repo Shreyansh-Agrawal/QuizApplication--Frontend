@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../modules/auth/services/auth.service';
+import { UserRoleService } from '../../../core/services/user-role.service';
+import { Roles } from '../../constants/roles.constants';
 
 @Component({
   selector: 'app-navbar',
@@ -10,19 +12,20 @@ import { AuthService } from '../../../modules/auth/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   authService = inject(AuthService);
+  userRoleService = inject(UserRoleService);
   isLoggedIn: boolean = false;
   role: string = '';
   router = inject(Router);
   items: MenuItem[] | undefined;
 
   ngOnInit() {
-    this.isLoggedIn = this.authService.getLoginStatus();
-    this.role = this.authService.getUserRole();
+    this.isLoggedIn = this.userRoleService.getLoginStatus();
+    this.role = this.userRoleService.getUserRole();
     this.updateMenuItems();
 
     this.authService.loginSuccess.subscribe({next: ()=> {
-      this.isLoggedIn = this.authService.getLoginStatus();
-      this.role = this.authService.getUserRole();
+      this.isLoggedIn = this.userRoleService.getLoginStatus();
+      this.role = this.userRoleService.getUserRole();
       this.updateMenuItems();
     }})
   }
@@ -32,7 +35,7 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Admins',
         icon: 'pi pi-fw pi-users',
-        visible: this.role == 'super-admin' && this.isLoggedIn,
+        visible: this.role == Roles.superAdmin && this.isLoggedIn,
         routerLink: 'user/admins',
         routerLinkActiveOptions: { exact: true }
       },
@@ -40,8 +43,8 @@ export class NavbarComponent implements OnInit {
         label: 'Players',
         icon: 'pi pi-fw pi-users',
         visible:
-          (this.role === 'admin' ||
-          this.role === 'super-admin') && this.isLoggedIn,
+          (this.role === Roles.admin ||
+          this.role === Roles.superAdmin) && this.isLoggedIn,
         routerLink: 'user/players',
         routerLinkActiveOptions: { exact: true }
       },
@@ -55,7 +58,7 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Questions',
         icon: 'pi pi-fw pi-file',
-        visible: this.role == 'admin' && this.isLoggedIn,
+        visible: this.role == Roles.admin && this.isLoggedIn,
         routerLink: 'question/question-list',
         routerLinkActiveOptions: { exact: true }
       },
@@ -69,14 +72,14 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Take Quiz',
         icon: 'pi pi-fw pi-pencil',
-        visible: this.role == 'player' && this.isLoggedIn,
+        visible: this.role == Roles.player && this.isLoggedIn,
         routerLink: 'quiz/play',
         routerLinkActiveOptions: { exact: true }
       },
       {
         label: 'My Scores',
         icon: 'pi pi-fw pi-history',
-        visible: this.role == 'player' && this.isLoggedIn,
+        visible: this.role == Roles.player && this.isLoggedIn,
         routerLink: 'quiz/scores',
         routerLinkActiveOptions: { exact: true }
       },
@@ -103,5 +106,10 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl('auth/login');
     this.updateMenuItems();
+  }
+
+  matchUrlPath(path: string) {
+    const url = this.router.url;
+    return url.includes(path);
   }
 }

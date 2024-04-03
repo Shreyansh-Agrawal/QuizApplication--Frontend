@@ -1,5 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { QuestionService } from '../../services/question.service';
+import { QuizData } from '../../models/quiz-data.model';
+import { Question } from '../../models/question.model';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -12,13 +14,12 @@ interface AutoCompleteCompleteEvent {
   styleUrl: './question-list.component.css',
 })
 export class QuestionListComponent implements OnInit {
-  categories: any[] = [];
-  selectedCategory: string = '';
-  filteredCategories: any[] = [];
+  quizData: QuizData[] = [];
+  selectedCategory: QuizData | undefined;
+  filteredCategories: QuizData[] = [];
 
-  questions: any[] = [];
-  selectedQuestion: string = '';
-  filteredQuestions: any[] = [];
+  selectedQuestion: Question | undefined;
+  filteredQuestions: Question[] = [];
 
   questionService = inject(QuestionService);
 
@@ -26,48 +27,44 @@ export class QuestionListComponent implements OnInit {
     this.questionService.getQuizData();
     this.questionService.questionList.subscribe({
       next: (res) => {
-        console.log(res);
-        
-        // const categories = res.map((item) => ({
+        // const quizData = res.map((item) => ({
         //   category_id: item.category_id,
         //   category: item.category,
         // }));
-        this.categories = res;
+        this.quizData = res;
       },
     });
   }
 
   filterCategory(event: AutoCompleteCompleteEvent) {
-    const filtered: any[] = [];
+    const filtered: QuizData[] = [];
     const query = event.query;
-    console.log(event);
-    console.log(query);
 
-    for (const item of this.categories) {
+    for (const item of this.quizData) {
       if (item.category.toLowerCase().indexOf(query.toLowerCase()) == 0) {
         filtered.push(item);
       }
     }
+    console.log(filtered);
 
     this.filteredCategories = filtered;
-    console.log(this.filteredCategories);
-    console.log(this.selectedCategory);
   }
 
   filterQuestion(event: AutoCompleteCompleteEvent) {
-    const filtered: any[] = [];
+    const filtered: Question[] = [];
     const query = event.query;
-    console.log(event);
-    console.log(query);
 
-    for (const item of this.categories) {
-      if (item.question.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(item);
+    for (const item of this.quizData) {
+      for (const questionItem of item.question_data) {
+        if (
+          questionItem.question_text
+            .toLowerCase()
+            .indexOf(query.toLowerCase()) == 0
+        ) {
+          filtered.push(questionItem);
+        }
       }
     }
-
     this.filteredQuestions = filtered;
-    console.log(this.filteredQuestions);
-    console.log(this.selectedQuestion);
   }
 }

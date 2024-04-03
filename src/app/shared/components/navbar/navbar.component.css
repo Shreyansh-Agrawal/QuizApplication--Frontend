@@ -3,16 +3,6 @@
   align-items: center;
 }
 
-.button-group p-button {
-  margin-right: 0.7rem;
-}
-
-/* .menu-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-} */
-
 .logo-container {
   display: flex;
   align-items: center;
@@ -20,4 +10,20 @@
 
 .logo {
   margin-right: 0.7rem;
+}
+
+:host::ng-deep p-menubarsub {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+:host::ng-deep a.p-menubar-button {
+  order: 3;
+  padding-left: 12px;
+}
+
+:host::ng-deep .p-menubar{
+  padding: 13px 16px;
+  border-radius: 0px;
 }

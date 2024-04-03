@@ -36,6 +36,14 @@ input {
     margin-right: 1rem;
 }
 
-::ng-deep .p-button{
+:host::ng-deep .p-button {
   width: 100%;
+  background-color: #209cee;
+  transition: background-color border-color 0.3s ease;
+  border-color: #209cee;
+}
+
+:host::ng-deep .p-button:hover {
+  background-color: #1a83cc;
+  border-color: #1a83cc;
 }

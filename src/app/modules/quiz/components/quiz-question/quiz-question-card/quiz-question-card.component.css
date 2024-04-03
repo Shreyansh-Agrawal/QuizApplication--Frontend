@@ -1,9 +1,13 @@
 .options {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 .options-container {
-    padding: 1rem;
+  padding: 1rem;
+}
+
+.question-card {
+  padding-bottom: 1rem;
 }
