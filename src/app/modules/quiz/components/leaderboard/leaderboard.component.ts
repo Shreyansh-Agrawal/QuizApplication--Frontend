@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { QuizService } from '../../../../core/services/quiz.service';
-import { LeaderboardData } from '../../../../shared/models/leaderboard-data';
+import { QuizService } from '../../services/quiz.service';
+import { Leaderboard } from '../../models/leaderboard.model';
 
 @Component({
   selector: 'app-leaderboard',
@@ -9,7 +9,7 @@ import { LeaderboardData } from '../../../../shared/models/leaderboard-data';
 })
 export class LeaderboardComponent implements OnInit {
   quizService = inject(QuizService);
-  leaderboard: LeaderboardData[] = [];
+  leaderboard: Leaderboard[] = [];
 
   ngOnInit() {
     this.quizService.getLeaderboard()

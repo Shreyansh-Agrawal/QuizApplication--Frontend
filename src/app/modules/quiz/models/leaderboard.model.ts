@@ -1,4 +1,4 @@
-export interface LeaderboardData {
+export interface Leaderboard {
   player_id: string;
   username: string;
   score: number;

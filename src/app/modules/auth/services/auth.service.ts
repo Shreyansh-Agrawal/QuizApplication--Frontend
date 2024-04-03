@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { User } from '../../shared/models/user';
 import { jwtDecode } from 'jwt-decode';
-import { LoginData } from '../../shared/models/login-data';
-import { APIResponse } from '../../shared/models/api-response';
+import { LoginResponse } from '../models/login-response.model';
+import { APIResponse } from '../../../shared/models/api-response.model';
 import { Subject } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { RefreshData } from '../../shared/models/refresh-data';
+import { RefreshResponse } from '../models/refresh-response.model';
+import { RegistrationForm } from '../models/register-form.model';
+import { LoginForm } from '../models/login-form.model';
+import { TokenPayload } from '../models/token-payload.model';
 
 const RoleMapping = {
   SUPER_ADMIN: 'SFAB6c',
@@ -28,7 +30,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
     this.refresh = this.refresh.bind(this);
   }
-  register(userData: User) {
+  register(userData: RegistrationForm) {
     this.http
       .post<APIResponse<void>>(`${this.baseURL}/register`, userData)
       .subscribe({
@@ -45,9 +47,9 @@ export class AuthService {
       });
   }
 
-  login(loginData: User) {
+  login(loginData: LoginForm) {
     this.http
-      .post<APIResponse<LoginData>>(`${this.baseURL}/login`, loginData)
+      .post<APIResponse<LoginResponse>>(`${this.baseURL}/login`, loginData)
       .subscribe({
         next: (res) => {
           this.messageService.add({ severity: 'success', summary: res.message, detail: 'Welcome to SmartQuiz' });
@@ -88,7 +90,7 @@ export class AuthService {
     console.log('refresh func called');
     
     this.http
-      .post<APIResponse<RefreshData>>(`${this.baseURL}/refresh`, null)
+      .post<APIResponse<RefreshResponse>>(`${this.baseURL}/refresh`, null)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -120,7 +122,7 @@ export class AuthService {
   getUserRole() {
     const access_token = this.getAccessToken();
     if (!access_token) return '';
-    const payload: any = jwtDecode(access_token);
+    const payload: TokenPayload = jwtDecode(access_token);
     
     return this.getRoleFromMapping(payload.cap)
   }

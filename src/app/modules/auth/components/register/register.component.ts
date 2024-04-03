@@ -1,6 +1,6 @@
 import { Component, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

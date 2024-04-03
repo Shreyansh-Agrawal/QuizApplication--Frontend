@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Category } from '../../shared/models/category';
-import { APIResponse } from '../../shared/models/api-response';
+import { Category } from '../models/category.model';
+import { APIResponse } from '../../../shared/models/api-response.model';
 import { MessageService } from 'primeng/api';
 
 @Injectable({

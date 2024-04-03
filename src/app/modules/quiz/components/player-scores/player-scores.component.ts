@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { QuizService } from '../../../../core/services/quiz.service';
-import { Score } from '../../../../shared/models/score';
+import { QuizService } from '../../services/quiz.service';
+import { Score } from '../../models/score.model';
 
 @Component({
   selector: 'app-player-scores',

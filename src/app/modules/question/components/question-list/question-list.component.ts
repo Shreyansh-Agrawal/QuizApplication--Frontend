@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { QuestionService } from '../../../../core/services/question.service';
+import { QuestionService } from '../../services/question.service';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;

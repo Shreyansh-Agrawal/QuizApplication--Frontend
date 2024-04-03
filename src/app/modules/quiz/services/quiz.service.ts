@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LeaderboardData } from '../../shared/models/leaderboard-data';
-import { APIResponse } from '../../shared/models/api-response';
-import { Score } from '../../shared/models/score';
+import { Leaderboard } from '../models/leaderboard.model';
+import { APIResponse } from '../../../shared/models/api-response.model';
+import { Score } from '../models/score.model';
 import { MessageService } from 'primeng/api';
-import { QuizQuestion } from '../../shared/models/quiz-question';
+import { QuizQuestion } from '../models/quiz-question.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +15,14 @@ export class QuizService {
   http = inject(HttpClient);
   messageService = inject(MessageService)
 
-  leaderboardData = new Subject<LeaderboardData[]>()
+  leaderboardData = new Subject<Leaderboard[]>()
   scores = new Subject<Score[]>()
   quizQuestions = new Subject<QuizQuestion[]>()
   isLoading = false;
 
   getLeaderboard() {
     this.isLoading = true;
-    this.http.get<APIResponse<LeaderboardData[]>>(`${this.baseURL}/leaderboard`).subscribe({
+    this.http.get<APIResponse<Leaderboard[]>>(`${this.baseURL}/leaderboard`).subscribe({
       next: (res) => {
         this.leaderboardData.next(res.data)
       },

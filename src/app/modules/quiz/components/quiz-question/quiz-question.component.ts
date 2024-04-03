@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { QuizService } from '../../../../core/services/quiz.service';
-import { QuizQuestion } from '../../../../shared/models/quiz-question';
+import { QuizService } from '../../services/quiz.service';
+import { QuizQuestion } from '../../models/quiz-question.model';
 
 @Component({
   selector: 'app-quiz-question',

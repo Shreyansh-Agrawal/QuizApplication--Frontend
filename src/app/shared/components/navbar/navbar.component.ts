@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { AuthService } from '../../../core/services/auth.service';
+import { AuthService } from '../../../modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-navbar',

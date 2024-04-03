@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Subject } from 'rxjs';
-import { APIResponse } from '../../shared/models/api-response';
-import { QuizData } from '../../shared/models/quiz-data';
+import { APIResponse } from '../../../shared/models/api-response.model';
+import { QuizData } from '../models/quiz-data.model';
 
 @Injectable({
   providedIn: 'root',
