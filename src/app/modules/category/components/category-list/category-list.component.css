@@ -1,11 +1,31 @@
 .category-list {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1rem;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .category-card {
-    padding: 1rem;
+  padding: 1rem;
+}
+
+.category-form {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background: transparent;
+  width: 50%;
+  height: fit-content;
+  padding: 2rem;
+}
+
+.create-category-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem
 }

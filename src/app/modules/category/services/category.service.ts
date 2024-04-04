@@ -12,6 +12,7 @@ export class CategoryService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
   http = inject(HttpClient);
   messageService = inject(MessageService);
+  successSubject = new Subject<string>();
   isLoading = false;
   categoryList = new Subject<Category[]>();
 
@@ -38,27 +39,47 @@ export class CategoryService {
   }
 
   createCategory(categoryName: string) {
-    this.http.post(`${this.baseURL}/categories`, categoryName).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-        this.messageService.add({
-          severity: 'error',
-          summary: err.error.message,
-          detail: '',
-        });
-      },
-    });
-  }
-
-  updateCategory(categoryId: string, categoryName: string) {
+    const categoryData = { category_name: categoryName };
     this.http
-      .put(`${this.baseURL}/categories/${categoryId}`, categoryName)
+      .post<APIResponse<void>>(`${this.baseURL}/categories`, categoryData)
       .subscribe({
         next: (res) => {
           console.log(res);
+          this.messageService.add({
+            severity: 'success',
+            summary: res.message,
+            detail: '',
+          });
+          this.successSubject.next('create');
+        },
+        error: (err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: err.error.message,
+            detail: 'Try a different name',
+          });
+        },
+      });
+  }
+
+  updateCategory(categoryId: string, categoryName: string) {
+    const categoryData = { updated_category_name: categoryName };
+
+    this.http
+      .put<APIResponse<void>>(
+        `${this.baseURL}/categories/${categoryId}`,
+        categoryData
+      )
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.messageService.add({
+            severity: 'success',
+            summary: res.message,
+            detail: '',
+          });
+          this.successSubject.next('update');
         },
         error: (err) => {
           console.log(err);
@@ -72,9 +93,15 @@ export class CategoryService {
   }
 
   deleteCategory(categoryId: string) {
-    this.http.delete(`${this.baseURL}/categories/${categoryId}`).subscribe({
+    this.http.delete<APIResponse<void>>(`${this.baseURL}/categories/${categoryId}`).subscribe({
       next: (res) => {
         console.log(res);
+        this.messageService.add({
+          severity: 'success',
+          summary: res.message,
+          detail: '',
+        });
+        this.successSubject.next('delete');
       },
       error: (err) => {
         console.log(err);

@@ -1,11 +1,29 @@
 <app-loader *ngIf="this.categoryService.isLoading"></app-loader>
-<div class="category-list" *ngIf="!this.categoryService.isLoading">
-  <div *ngFor="let category of categories" class="category-card">
-    <app-category-card
+<div *ngIf="!this.categoryService.isLoading">
+  <div class="create-category-btn" *ngIf="this.userRoleIsAdmin()">
+    <p-button
+      label="Create Category"
+      severity="success"
+      (click)="openCreateCategoryForm()"
+    ></p-button>
+  </div>
+  <div class="category-list">
+    <div *ngFor="let category of categories" class="category-card">
+      <app-category-card
+        [category]="category"
+        (click)="selectCategory(category)"
+        (updateEvent)="this.openUpdateCategoryForm($event)"
+        (deleteEvent)="handleDeleteCategory($event)"
+      ></app-category-card>
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="showCategoryForm">
+  <div class="category-form">
+    <app-category-form
       [category]="category"
-      (click)="selectCategory(category)"
-      (updateEvent)="this.handleUpdateCategory($event)"
-      (deleteEvent)="handleDeleteCategory($event)"
-    ></app-category-card>
+      [editMode]="editMode"
+      (closeForm)="this.closeCategoryForm()"
+    ></app-category-form>
   </div>
 </div>

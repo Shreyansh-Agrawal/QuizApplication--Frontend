@@ -1,0 +1,60 @@
+<p-card>
+  <div class="card">
+    <div class="category-data">
+      <div class="category-data-input" *ngIf="this.editMode">
+        <label for="category-id">Category ID: </label>
+        <input
+          id="category-id"
+          type="text"
+          pInputText
+          [disabled]="true"
+          [(ngModel)]="category.category_id"
+        />
+      </div>
+
+      <div class="category-data-input" *ngIf="this.editMode">
+        <label for="creator-id">Creator ID: </label>
+        <input
+          id="creator-id"
+          type="text"
+          pInputText
+          [disabled]="true"
+          [(ngModel)]="category.admin_id"
+        />
+      </div>
+
+      <div class="category-data-input">
+        <label for="category-name">Category Name: </label>
+        <input
+          id="category-name"
+          type="text"
+          pInputText
+          name="category-name"
+          required
+          [(ngModel)]="category.category_name"
+        />
+      </div>
+    </div>
+    <div class="btn-group">
+      <p-button
+        label="Update"
+        severity="warning"
+        (click)="this.updateCategory(category)"
+        *ngIf="this.editMode"
+      >
+      </p-button>
+      <p-button
+        label="Create"
+        severity="success"
+        *ngIf="!this.editMode"
+        (click)="this.createCategory(category)"
+      >
+      </p-button>
+      <p-button
+        icon="pi pi-times"
+        severity="danger"
+        (click)="this.closeCategoryForm()"
+      ></p-button>
+    </div>
+  </div>
+</p-card>

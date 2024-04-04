@@ -1,0 +1,15 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.category-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-data-input {
+  padding: 1rem 0;
+}
