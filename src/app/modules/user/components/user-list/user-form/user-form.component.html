@@ -1,0 +1,63 @@
+<p-card>
+  <div class="card">
+    <form (ngSubmit)="createUser()" #userForm="ngForm">
+      <div class="user-data">
+        <div class="user-data-input">
+          <p-floatLabel>
+            <input
+              id="name"
+              type="text"
+              pInputText
+              name="name"
+              required
+              ngModel
+            />
+            <label for="name">Name</label>
+          </p-floatLabel>
+        </div>
+        <div class="user-data-input">
+          <p-floatLabel>
+            <input
+              id="email"
+              type="email"
+              pInputText
+              name="email"
+              email
+              required
+              ngModel
+            />
+            <label for="email">Email</label>
+          </p-floatLabel>
+        </div>
+        <div class="user-data-input">
+          <p-floatLabel>
+            <input
+              id="username"
+              type="text"
+              pInputText
+              name="username"
+              required
+              ngModel
+            />
+            <label for="username">Username</label>
+          </p-floatLabel>
+        </div>
+      </div>
+      <div class="btn-group">
+        <p-button
+          label="Create Admin"
+          type="submit"
+          severity="success"
+          [disabled]="!userForm.valid"
+        >
+        </p-button>
+        <p-button
+          label="Cancel"
+          severity="danger"
+          type="button"
+          (click)="this.closeUserForm()"
+        ></p-button>
+      </div>
+    </form>
+  </div>
+</p-card>

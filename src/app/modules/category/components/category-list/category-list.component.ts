@@ -26,7 +26,7 @@ export class CategoryListComponent implements OnInit {
   ngOnInit() {
     this.getAllCategories();
     this.categoryService.successSubject.subscribe({
-      next: (res) => {
+      next: () => {
         this.getAllCategories();
       },
     });
@@ -98,7 +98,7 @@ export class CategoryListComponent implements OnInit {
       accept: () => {
         this.categoryService.deleteCategory(category.category_id);
         this.categoryService.successSubject.subscribe({
-          next: (res) => {
+          next: () => {
             this.getAllCategories();
           },
         });

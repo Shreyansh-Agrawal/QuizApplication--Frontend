@@ -11,10 +11,11 @@ import { MessageService } from 'primeng/api';
 export class UserService {
   baseURL = 'https://api-smartquiz.onrender.com/v1';
   http = inject(HttpClient);
-  messageService = inject(MessageService)
+  messageService = inject(MessageService);
   isLoading = false;
-  users = new Subject<User[]>()
-  profile = new Subject<User>()
+  users = new Subject<User[]>();
+  profile = new Subject<User>();
+  successSubject = new Subject<string>();
 
   getUserProfile() {
     this.isLoading = true;
@@ -24,7 +25,11 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
-        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
       },
       complete: () => {
         this.isLoading = false;
@@ -40,7 +45,11 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
-        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
       },
       complete: () => {
         this.isLoading = false;
@@ -56,7 +65,11 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
-        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
       },
       complete: () => {
         this.isLoading = false;
@@ -65,13 +78,23 @@ export class UserService {
   }
 
   createAdmin(adminData: User) {
-    this.http.post(`${this.baseURL}/admins`, adminData).subscribe({
+    this.http.post<APIResponse<void>>(`${this.baseURL}/admins`, adminData).subscribe({
       next: (res) => {
         console.log(res);
+        this.messageService.add({
+          severity: 'success',
+          summary: res.message,
+          detail: '',
+        });
+        this.successSubject.next('createAdmin');
       },
       error: (err) => {
         console.log(err);
-        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
       },
     });
   }
@@ -83,7 +106,11 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
-        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
       },
     });
   }
@@ -95,32 +122,58 @@ export class UserService {
       },
       error: (err) => {
         console.log(err);
-        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
       },
     });
   }
 
-  deleteAdmin(adminId: string) {
-    this.http.delete(`${this.baseURL}/admins/${adminId}`).subscribe({
+  deleteAdmin(adminId?: string) {
+    this.http.delete<APIResponse<void>>(`${this.baseURL}/admins/${adminId}`).subscribe({
       next: (res) => {
         console.log(res);
+        this.messageService.add({
+          severity: 'success',
+          summary: res.message,
+          detail: '',
+        });
+        this.successSubject.next('deleteAdmin');
       },
       error: (err) => {
         console.log(err);
-        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
+        this.messageService.add({
+          severity: 'error',
+          summary: err.error.message,
+          detail: '',
+        });
       },
     });
   }
 
-  deletePlayer(playerId: string) {
-    this.http.delete(`${this.baseURL}/players/${playerId}`).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-        this.messageService.add({ severity: 'error', summary: err.error.message, detail: '' });
-      },
-    });
+  deletePlayer(playerId?: string) {
+    this.http
+      .delete<APIResponse<void>>(`${this.baseURL}/players/${playerId}`)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.messageService.add({
+            severity: 'success',
+            summary: res.message,
+            detail: '',
+          });
+          this.successSubject.next('deletePlayer');
+        },
+        error: (err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: err.error.message,
+            detail: '',
+          });
+        },
+      });
   }
 }

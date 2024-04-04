@@ -1,6 +1,19 @@
 .user-table-card {
-    width: 70%;
-    margin: auto;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+  width: 70%;
+  margin: auto;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.user-form {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background: transparent;
+  width: fit-content;
+  height: fit-content;
+  padding: 2rem;
 }

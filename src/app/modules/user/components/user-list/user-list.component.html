@@ -11,11 +11,27 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 25%">S.No.</th>
-        <th style="width: 25%">Username</th>
-        <th style="width: 25%">Name</th>
-        <th style="width: 25%">Email</th>
-        <th style="width: 25%">Registration Date</th>
+        <th style="width: 10%">S.No.</th>
+        <th style="width: 20%">Username</th>
+        <th style="width: 20%">Name</th>
+        <th style="width: 30%">Email</th>
+        <th style="width: 20%">Registration Date</th>
+        <th
+          style="width: 10%"
+          *ngIf="
+            this.userRoleIsAdmin() ||
+            (this.userRoleIsSuperAdmin() && this.routeIsAdminRoute())
+          "
+        >
+          <p-button
+            icon="pi pi-plus"
+            [rounded]="true"
+            [text]="true"
+            severity="success"
+            (click)="openCreateUserForm()"
+            *ngIf="this.userRoleIsSuperAdmin()"
+          ></p-button>
+        </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
@@ -25,13 +41,26 @@
         <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.registration_date }}</td>
+        <td
+          *ngIf="
+            this.userRoleIsAdmin() ||
+            (this.userRoleIsSuperAdmin() && routeIsAdminRoute())
+          "
+        >
+          <p-button
+            icon="pi pi-trash"
+            [rounded]="true"
+            [text]="true"
+            severity="danger"
+            (click)="handleDeleteUser(user)"
+          ></p-button>
+        </td>
       </tr>
     </ng-template>
-    <ng-template pTemplate="paginatorleft">
-        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
-    </ng-template>
-    <ng-template pTemplate="paginatorright">
-        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
-    </ng-template>
   </p-table>
+</div>
+<div class="overlay" *ngIf="showUserForm">
+  <div class="user-form">
+    <app-user-form (closeForm)="this.closeUserForm()"></app-user-form>
+  </div>
 </div>

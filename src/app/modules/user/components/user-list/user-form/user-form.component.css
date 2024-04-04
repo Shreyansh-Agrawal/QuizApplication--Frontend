@@ -1,0 +1,14 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-data-input {
+  margin-bottom: 1.5rem;
+}

@@ -26,14 +26,14 @@ export class CreateCategoryComponent {
       category.category_id,
       category.category_name
     );
-    this.categoryService.successSubject.subscribe((res) => {
+    this.categoryService.successSubject.subscribe(() => {
       this.closeCategoryForm();
     });
   }
 
   createCategory(category: Category) {
     this.categoryService.createCategory(category.category_name);
-    this.categoryService.successSubject.subscribe((res) => {
+    this.categoryService.successSubject.subscribe(() => {
       this.closeCategoryForm();
     });
   }
