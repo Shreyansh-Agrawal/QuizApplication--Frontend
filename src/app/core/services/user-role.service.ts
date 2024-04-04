@@ -44,4 +44,19 @@ export class UserRoleService {
         return Roles.unknown;
     }
   }
+
+  userRoleIsSuperAdmin() {
+    if (this.getUserRole() == Roles.superAdmin) return true;
+    return false;
+  }
+
+  userRoleIsAdmin() {
+    if (this.getUserRole() == Roles.admin) return true;
+    return false;
+  }
+  
+  userRoleIsPlayer() {
+    if (this.getUserRole() == Roles.player) return true;
+    return false;
+  }
 }

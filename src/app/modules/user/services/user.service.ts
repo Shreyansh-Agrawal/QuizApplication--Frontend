@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { Subject } from 'rxjs';
 import { APIResponse } from '../../../shared/models/api-response.model';
 import { MessageService } from 'primeng/api';
+import { Password } from '../models/password.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class UserService {
   users = new Subject<User[]>();
   profile = new Subject<User>();
   successSubject = new Subject<string>();
+  errorSubject = new Subject<string>();
 
   getUserProfile() {
     this.isLoading = true;
@@ -99,10 +101,15 @@ export class UserService {
     });
   }
 
-  updateUserProfile(userData: User) {
-    this.http.put(`${this.baseURL}/profile/me`, userData).subscribe({
+  updateUserProfile(userData?: User) {
+    this.http.put<APIResponse<void>>(`${this.baseURL}/profile/me`, userData).subscribe({
       next: (res) => {
-        console.log(res);
+        this.messageService.add({
+          severity: 'success',
+          summary: res.message,
+          detail: '',
+        });
+        this.successSubject.next('updateProfile');
       },
       error: (err) => {
         console.log(err);
@@ -111,14 +118,24 @@ export class UserService {
           summary: err.error.message,
           detail: '',
         });
+        this.errorSubject.next('updateProfile');
       },
     });
   }
 
-  updateUserPassword(userCredentials: any) {
-    this.http.put(`${this.baseURL}/profile/me`, userCredentials).subscribe({
+  updateUserPassword(userCredentials: Password) {
+    delete userCredentials['confirm_password'],
+    
+    this.http.put<APIResponse<void>>(`${this.baseURL}/profile/password/me`, userCredentials).subscribe({
       next: (res) => {
-        console.log(res);
+        this.messageService.add({
+          severity: 'success',
+          summary: res.message,
+          detail: '',
+        });
+        console.log('line 137 change psw subject');
+        
+        this.successSubject.next('updatePassword');
       },
       error: (err) => {
         console.log(err);
@@ -127,6 +144,7 @@ export class UserService {
           summary: err.error.message,
           detail: '',
         });
+        this.errorSubject.next('updateProfile');
       },
     });
   }

@@ -1,5 +1,5 @@
 img {
-  width: 40%;
+  width: 37%;
 }
 
 .profile-page {
@@ -15,7 +15,7 @@ img {
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-top: 1.6rem;
 }
 
 .submit-button {
@@ -27,3 +27,16 @@ input {
   width: 100%;
 }
 
+:host::ng-deep .p-button {
+  width: 100%;
+}
+
+.change-password-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.password-input {
+  width: 49%;
+}

@@ -6,7 +6,7 @@
       </p-button>
       <p-button icon="pi pi-trash" severity="danger" (click)="this.deleteEvent.emit(category)"> </p-button>
     </div>
-    <div class="custom-design" *ngIf="!this.userRoleIsAdmin()">
+    <div class="custom-design" *ngIf="this.userRoleIsPlayer()">
       <div class="custom-design-content">
         <span>Click anywhere to start the Quiz</span>
       </div>

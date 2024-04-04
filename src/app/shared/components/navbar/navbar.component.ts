@@ -4,7 +4,7 @@ import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { UserRoleService } from '../../../core/services/user-role.service';
 import { Roles } from '../../constants/roles.constants';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,6 +13,7 @@ import { Roles } from '../../constants/roles.constants';
 export class NavbarComponent implements OnInit {
   authService = inject(AuthService);
   userRoleService = inject(UserRoleService);
+  location = inject(Location);
   isLoggedIn: boolean = false;
   role: string = '';
   router = inject(Router);
@@ -111,5 +112,12 @@ export class NavbarComponent implements OnInit {
   matchUrlPath(path: string) {
     const url = this.router.url;
     return url.includes(path);
+  }
+
+  goToPreviousPage() {
+    this.location.back();
+  }
+  goToNextPage() {
+    this.location.forward();
   }
 }

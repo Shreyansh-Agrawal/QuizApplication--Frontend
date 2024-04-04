@@ -9,7 +9,7 @@
 }
 
 .logo {
-  margin-right: 0.7rem;
+  margin: 0 0.7rem;
 }
 
 :host::ng-deep p-menubarsub {

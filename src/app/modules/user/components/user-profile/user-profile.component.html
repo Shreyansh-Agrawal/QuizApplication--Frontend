@@ -57,52 +57,73 @@
           <label for="registration-date">Created on</label>
         </p-floatLabel>
       </div>
-      <!-- <div class="form-group">
-        <p-floatLabel>
-          <p-calendar
-            id="registration-date"
-            name="registration-date"
-            [(ngModel)]="registrationDate"
-          ></p-calendar>
-          <label for="registration-date">Created on</label>
-        </p-floatLabel>
-      </div> -->
-      <div class="form-group">
-        <p-floatLabel>
-          <input
-            id="password"
-            type="password"
-            pInputText
-            name="password"
-            required
-            ngModel
-          />
-          <label for="password">New Password</label>
-        </p-floatLabel>
-      </div>
-      <div class="form-group">
-        <p-floatLabel>
-          <input
-            id="confirm-password"
-            type="password"
-            pInputText
-            name="confirm-password"
-            required
-            ngModel
-          />
-          <label for="confirm-password">Confirm Password</label>
-        </p-floatLabel>
-      </div>
       <div class="form-group">
         <p-button
           label="Update Profile"
           type="submit"
-          [disabled]="!!profileForm.valid"
-          [loading]="loading"
+          [disabled]="!profileForm.valid"
+          [loading]="loadingUpdateProfile"
           severity="success"
           class="submit-button"
         ></p-button>
       </div>
+    </form>
+    <p-divider [align]="'center'">
+      <b>OR</b>
+    </p-divider>
+    <form (ngSubmit)="updatePassword()" #passwordForm="ngForm">
+      <div class="form-group">
+        <p-floatLabel>
+          <input
+            id="current-password"
+            type="password"
+            pInputText
+            name="current_password"
+            required
+            ngModel
+          />
+          <label for="current-password">Current Password</label>
+        </p-floatLabel>
+      </div>
+      <div class="change-password-group">
+        <div class="form-group password-input">
+          <p-floatLabel>
+            <input
+              id="password"
+              type="password"
+              pInputText
+              name="new_password"
+              required
+              ngModel
+            />
+            <label for="new_password">New Password</label>
+          </p-floatLabel>
+        </div>
+        <div class="form-group password-input">
+          <p-floatLabel>
+            <input
+              id="confirm-password"
+              type="password"
+              pInputText
+              name="confirm_password"
+              required
+              ngModel
+            />
+            <label for="confirm_password">Confirm Password</label>
+          </p-floatLabel>
+        </div>
+      </div>
+        <div class="form-group">
+          <p-button
+            label="Update Password"
+            type="submit"
+            [disabled]="!passwordForm.valid"
+            [loading]="loadingUpdatePassword"
+            severity="success"
+            class="submit-button"
+          ></p-button>
+        </div>
+      
     </form>
   </div>
 </div>

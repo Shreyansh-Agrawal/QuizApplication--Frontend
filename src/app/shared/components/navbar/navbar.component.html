@@ -1,14 +1,27 @@
 <p-menubar [model]="items" class="menu-bar">
   <ng-template pTemplate="start">
     <div class="logo-container">
+      <p-button
+        icon="pi pi-angle-left"
+        [rounded]="true"
+        [text]="true"
+        (click)="this.goToPreviousPage()"
+      ></p-button>
       <img
         src="./../../../../assets/logo.svg"
         alt="SmartQuiz-logo"
         height="40"
         class="logo"
       />
+      <p-button
+        icon="pi pi-angle-right"
+        [rounded]="true"
+        [text]="true"
+        (click)="this.goToNextPage()"
+      ></p-button>
     </div>
   </ng-template>
+
   <ng-template pTemplate="end">
     <div class="button-group" *ngIf="!isLoggedIn">
       <p-button

@@ -21,4 +21,9 @@ export class CategoryCardComponent {
     if (this.userRole == Roles.admin) return true;
     return false;
   }
+  
+  userRoleIsPlayer() {
+    if (this.userRole == Roles.player) return true;
+    return false;
+  }
 }

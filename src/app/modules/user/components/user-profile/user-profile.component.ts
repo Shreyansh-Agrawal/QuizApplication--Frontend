@@ -10,8 +10,10 @@ import { User } from '../../models/user.model';
   styleUrl: './user-profile.component.css',
 })
 export class UserProfileComponent implements OnInit {
-  @ViewChild('profileForm') form: NgForm | undefined;
-  loading = false;
+  @ViewChild('profileForm') profileForm: NgForm | undefined;
+  @ViewChild('passwordForm') passwordForm: NgForm | undefined;
+  loadingUpdateProfile = false;
+  loadingUpdatePassword = false;
   userService = inject(UserService);
   router = inject(Router);
   userData: User | undefined;
@@ -34,6 +36,36 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    console.log(this.registrationDate);
+    this.loadingUpdateProfile = true;
+
+    this.userData = this.profileForm?.value;
+    this.userService.updateUserProfile(this.userData);
+    this.userService.successSubject.subscribe({
+      next: () => {
+        this.loadingUpdateProfile = false;
+      },
+    });
+    this.userService.errorSubject.subscribe({
+      next: () => {
+        this.loadingUpdateProfile = false;
+      },
+    });
+  }
+
+  updatePassword() {
+    this.loadingUpdatePassword = true;
+
+    const userCredentials = this.passwordForm?.value;
+    this.userService.updateUserPassword(userCredentials);
+    this.userService.successSubject.subscribe({
+      next: () => {
+        this.loadingUpdatePassword = false;
+      },
+    });
+    this.userService.errorSubject.subscribe({
+      next: () => {
+        this.loadingUpdatePassword = false;
+      },
+    });
   }
 }
