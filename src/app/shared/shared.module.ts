@@ -7,8 +7,10 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -18,6 +20,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
 import { LoaderComponent } from '../utils/loader/loader.component';
 import { SliceWordsPipe } from './pipes/slice-words.pipe';
 
@@ -31,8 +34,10 @@ import { SliceWordsPipe } from './pipes/slice-words.pipe';
     CalendarModule,
     CardModule,
     ConfirmDialogModule,
+    DialogModule,
     DividerModule,
     DropdownModule,
+    FileUploadModule,
     FloatLabelModule,
     FormsModule,
     InputTextModule,
@@ -43,6 +48,7 @@ import { SliceWordsPipe } from './pipes/slice-words.pipe';
     TableModule,
     TagModule,
     ToastModule,
+    TooltipModule,
     LoaderComponent,
     SliceWordsPipe
   ],

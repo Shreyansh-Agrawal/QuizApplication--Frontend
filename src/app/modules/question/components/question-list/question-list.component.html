@@ -1,42 +1,75 @@
 <app-loader *ngIf="this.questionService.isLoading"></app-loader>
 <div class="questions-page" *ngIf="!this.questionService.isLoading">
-  <div class="search-autocomplete">
-    <div class="select-category">
-      <p-autoComplete
-        [(ngModel)]="selectedCategory"
-        [dropdown]="true"
-        [suggestions]="filteredCategories"
-        (completeMethod)="filterCategory($event)"
-        field="category"
-        placeholder="category"
-      ></p-autoComplete>
+  <div class="question-page-header">
+    <div class="search-autocomplete">
+      <div class="select-category">
+        <p-autoComplete
+          [(ngModel)]="selectedCategory"
+          [dropdown]="true"
+          [suggestions]="filteredCategories"
+          (completeMethod)="filterCategory($event)"
+          field="category"
+          placeholder="search category..."
+        ></p-autoComplete>
+      </div>
+      <div class="select-category">
+        <p-autoComplete
+          [(ngModel)]="selectedQuestion"
+          [dropdown]="true"
+          [suggestions]="filteredQuestions"
+          (completeMethod)="filterQuestion($event)"
+          field="question_text"
+          placeholder="search question..."
+        ></p-autoComplete>
+      </div>
     </div>
-    <div class="select-category">
-      <p-autoComplete
-        [(ngModel)]="selectedQuestion"
-        [dropdown]="true"
-        [suggestions]="filteredQuestions"
-        (completeMethod)="filterQuestion($event)"
-        field="question_text"
-        placeholder="question"
-      ></p-autoComplete>
+    <div class="btn-group">
+      <div class="upload-btn">
+        <p-button icon="pi pi-upload" (click)="uploadQuizData()" pTooltip="Upload quiz data" type="file"></p-button>
+        <!-- <p-fileUpload
+          mode="basic"
+          chooseIcon="pi pi-upload"
+          name="demo[]"
+          accept=".json"
+          (onUpload)="uploadQuizData($any($event))"
+        ></p-fileUpload> -->
+      </div>
+      <div class="download-btn">
+        <p-button
+          icon="pi pi-download"
+          severity="success"
+          (click)="downloadQuizData()"
+          pTooltip="Download quiz data"
+        ></p-button>
+      </div>
     </div>
   </div>
   <div class="questions">
     <p-accordion [multiple]="true" [activeIndex]="[0]">
       <div class="accordian">
-        <p-accordionTab
-          *ngFor="let item of quizData"
-          header="{{ item.category }}"
-        >
+        <p-accordionTab *ngFor="let item of quizData"
+          ><ng-template pTemplate="header">
+            <span>{{ item.category }}</span>
+          </ng-template>
+          <div class="add-question-btn">
+            <p-button
+              type="button"
+              icon="pi pi-plus"
+              severity="success"
+              [text]="true"
+              (click)="openCreateQuestionForm(item.category_id)"
+            ></p-button>
+          </div>
           <app-question-card
             *ngFor="let question of item.question_data"
             [question]="question"
+            (updateEvent)="handleUpdateQuestion($event)"
+            (deleteEvent)="handleDeleteQuestion($event)"
           ></app-question-card>
         </p-accordionTab>
       </div>
     </p-accordion>
   </div>
 </div>
-<p>{{selectedCategory?.category}}</p>
-<p>{{selectedQuestion?.question_text}}</p>
+<p>{{ selectedCategory?.category }}</p>
+<p>{{ selectedQuestion?.question_text }}</p>

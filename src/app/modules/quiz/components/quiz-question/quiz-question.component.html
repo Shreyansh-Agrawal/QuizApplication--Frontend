@@ -1,15 +1,92 @@
-<app-loader *ngIf="this.quizService.isLoading"></app-loader>
-<div class="quiz-page" *ngIf="!this.quizService.isLoading">
+<app-loader *ngIf="quizService.isLoading"></app-loader>
+<div class="quiz-page" *ngIf="!quizService.isLoading">
   <div class="quiz-timer">
     <p-progressBar [value]="10"></p-progressBar>
   </div>
   <form (ngSubmit)="submitQuiz()" #quizForm="ngForm">
-    <app-quiz-question-card
-      *ngFor="let question of quizQuestions"
-      [question]="question"
-    ></app-quiz-question-card>
+    <div *ngFor="let question of quizQuestions">
+      <div class="question-card">
+        <p-card header="{{ question.question_text }}">
+          <div *ngIf="question?.question_type?.toLowerCase() === 'mcq'">
+            <p class="m-0" *ngFor="let option of question?.options">
+              <input
+                type="radio"
+                id="{{ question.question_id + '-' + option }}"
+                name="{{ question.question_id }}"
+                [(ngModel)]="userResponse[question.question_id]"
+                [value]="option"
+                required
+              />
+              <label for="{{ question.question_id + '-' + option }}">{{
+                option
+              }}</label>
+            </p>
+          </div>
+          <div *ngIf="question?.question_type?.toLowerCase() === 'one-word'">
+            <label for="{{ question.question_id }}"></label>
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="userResponse[question.question_id]"
+              id="{{ question.question_id }}"
+              name="{{ question.question_id }}"
+              required
+            />
+          </div>
+          <div
+            class="options-container"
+            *ngIf="question?.question_type?.toLowerCase() === 'true-false'"
+          >
+            <div class="options">
+              <input
+                type="radio"
+                id="{{ question.question_id }}-true"
+                name="{{ question.question_id }}"
+                [(ngModel)]="userResponse[question.question_id]"
+                value="true"
+                required
+              />
+              <label for="{{ question.question_id }}-true">True</label>
+            </div>
+            <div class="options">
+              <input
+                type="radio"
+                id="{{ question.question_id }}-false"
+                name="{{ question.question_id }}"
+                [(ngModel)]="userResponse[question.question_id]"
+                value="false"
+                required
+              />
+              <label for="{{ question.question_id }}-false">False</label>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
     <div class="form-group">
-      <p-button label="Submit" type="submit" class="submit-button"></p-button>
+      <p-button
+        label="Submit"
+        type="submit"
+        class="submit-button"
+        severity="success"
+        [disabled]="!quizForm.valid"
+      ></p-button>
     </div>
   </form>
+  <p-dialog
+    header="Quiz Score: {{ quizResult?.score }}"
+    [(visible)]="showResponses"
+    [style]="{ width: '70vw', height: '80vh', marginTop: '1rem' }"
+  >
+  <div *ngFor="let response of quizResult?.responses">
+    <div>
+      <h3>Question: {{ response.question_text }}</h3>
+      <p>Answer: {{ response.user_answer }}</p>
+      <p>Correct Answer: {{ response.correct_answer }}</p>
+      <p [ngClass]="{'correct': response.is_correct, 'incorrect': !response.is_correct}">
+        {{ response.is_correct ? 'Correct' : 'Incorrect' }}
+      </p>
+    </div>
+  </div>
+  </p-dialog>
 </div>

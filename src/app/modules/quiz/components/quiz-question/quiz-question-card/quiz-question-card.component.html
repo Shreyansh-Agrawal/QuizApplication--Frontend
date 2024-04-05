@@ -1,22 +1,24 @@
 <div class="question-card">
-    <p-card header={{question?.question_text}}>
-        <div *ngIf="question?.question_type?.toLowerCase() === 'mcq'">
-            <p class="m-0" *ngFor="let option of question?.options">
-                {{option}}
-            </p>
-        </div>
-        <div *ngIf="question?.question_type?.toLowerCase() === 'one-word'">
-            <input type="text" pInputText ngModel />
-        </div>
-        <div class="options-container" *ngIf="question?.question_type?.toLowerCase() === 'true-false'">
-            <div class="options">
-                <p-radioButton name="true-false" value="true" [(ngModel)]="ingredient" inputId="true"></p-radioButton>
-                <label for="true">True</label>
-            </div>
-            <div class="options">
-                <p-radioButton name="true-false" value="false" [(ngModel)]="ingredient" inputId="false"></p-radioButton>
-                <label for="false">False</label>
-            </div>
-        </div>
-    </p-card>
+  <p-card header="{{ question.question_text }}">
+    <div *ngIf="question?.question_type?.toLowerCase() === 'mcq'">
+      <p class="m-0" *ngFor="let option of question?.options">
+        <input type="radio" id="{{ question.question_id + '-' + option }}" name="{{ question.question_id }}" [(ngModel)]="userResponse[question.question_id]" [value]="option">
+        <label for="{{ question.question_id + '-' + option }}">{{ option }}</label>
+      </p>
+    </div>
+    <div *ngIf="question?.question_type?.toLowerCase() === 'one-word'">
+      <label for="{{ question.question_id }}-text-input">Answer:</label>
+      <input type="text" pInputText [(ngModel)]="userResponse[question.question_id]" id="{{ question.question_id }}-text-input" name="{{ question.question_id }}-text-input">
+    </div>
+    <div class="options-container" *ngIf="question?.question_type?.toLowerCase() === 'true-false'">
+      <div class="options">
+        <input type="radio" id="{{ question.question_id }}-true" name="{{ question.question_id }}" [(ngModel)]="userResponse[question.question_id]" value="true">
+        <label for="{{ question.question_id }}-true">True</label>
+      </div>
+      <div class="options">
+        <input type="radio" id="{{ question.question_id }}-false" name="{{ question.question_id }}" [(ngModel)]="userResponse[question.question_id]" value="false">
+        <label for="{{ question.question_id }}-false">False</label>
+      </div>
+    </div>
+  </p-card>
 </div>

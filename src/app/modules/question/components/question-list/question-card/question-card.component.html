@@ -1,16 +1,33 @@
 <div class="question-card">
-    <p-card header={{question?.question_text}}>
-        <p class="m-0">
-            <p-tag value={{question?.question_type}}></p-tag>
-        </p>
-        <p *ngIf="question?.options?.other_options?.length!==0">
-            1. {{question?.options?.answer}}
-        </p>
-        <p class="m-0" *ngFor="let option of question?.options?.other_options; let i = index">
-            {{i+2}}. {{option}}
-        </p>
-        <p class="answer">
-            Answer: {{question?.options?.answer}}
-        </p>
-    </p-card>
+  <p-card header="{{ question?.question_text }}">
+    <p class="m-0">
+      <p-tag value="{{ question?.question_type }}"></p-tag>
+    </p>
+    <p *ngIf="question?.options?.other_options?.length !== 0">
+      1. {{ question?.options?.answer }}
+    </p>
+    <p
+      class="m-0"
+      *ngFor="let option of question?.options?.other_options; let i = index"
+    >
+      {{ i + 2 }}. {{ option }}
+    </p>
+    <p class="answer">Answer: {{ question?.options?.answer }}</p>
+    <div class="btn-group">
+      <p-button
+        icon="pi pi-pencil"
+        [text]="true"
+        severity="warning"
+        (click)="this.updateEvent.emit(question)"
+      >
+      </p-button>
+      <p-button
+        icon="pi pi-trash"
+        [text]="true"
+        severity="danger"
+        (click)="this.deleteEvent.emit(question)"
+      >
+      </p-button>
+    </div>
+  </p-card>
 </div>

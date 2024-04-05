@@ -9,6 +9,7 @@
 
 :host::ng-deep .p-card {
   border-top: 5px solid #209cee;
+  cursor: pointer;
 }
 
 .category-name {

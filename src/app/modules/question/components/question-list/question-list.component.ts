@@ -2,10 +2,16 @@ import { Component, OnInit, inject } from '@angular/core';
 import { QuestionService } from '../../services/question.service';
 import { QuizData } from '../../models/quiz-data.model';
 import { Question } from '../../models/question.model';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
   query: string;
+}
+
+interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
 }
 
 @Component({
@@ -22,6 +28,9 @@ export class QuestionListComponent implements OnInit {
   filteredQuestions: Question[] = [];
 
   questionService = inject(QuestionService);
+
+  confirmationService = inject(ConfirmationService);
+  messageService = inject(MessageService);
 
   ngOnInit() {
     this.questionService.getQuizData();
@@ -66,5 +75,53 @@ export class QuestionListComponent implements OnInit {
       }
     }
     this.filteredQuestions = filtered;
+  }
+
+  openCreateQuestionForm(categoryId: string) {
+    console.log(categoryId);
+  }
+
+  handleUpdateQuestion(question?: Question) {
+    console.log(question);
+  }
+
+  handleDeleteQuestion(question?: Question) {
+    this.confirmationService.confirm({
+      // target: event.target as EventTarget,
+      message: `Note: Deleted questions cannot be restored!`,
+      header: `Are you sure you want to permanently delete: ${question?.question_text}?`,
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptButtonStyleClass: 'p-button-danger p-button-text',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        this.questionService.deleteQuestion(question?.question_id);
+        this.questionService.successSubject.subscribe({
+          next: () => {
+            this.questionService.getQuizData();
+          },
+        });
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Question not deleted',
+          life: 3000,
+        });
+      },
+    });
+  }
+
+  uploadQuizData() {
+    console.log("upload");
+    
+  }
+
+  downloadQuizData(){
+    console.log('down');
+    
+    this.questionService.getQuizDataForDownload();
+    
   }
 }

@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { QuestionListComponent } from './components/question-list/question-list.component';
 import { QuestionCardComponent } from './components/question-list/question-card/question-card.component';
-import { CreateQuestionComponent } from './components/question-list/create-question/create-question.component';
 import { QuestionRoutingModule } from './question-routing.module';
+import { QuestionFormComponent } from './components/question-list/question-form/question-form.component';
 
 @NgModule({
   declarations: [
     QuestionListComponent,
     QuestionCardComponent,
-    CreateQuestionComponent,
+    QuestionFormComponent,
   ],
   imports: [CommonModule, SharedModule, QuestionRoutingModule],
 })

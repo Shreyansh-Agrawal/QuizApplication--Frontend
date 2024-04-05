@@ -1,9 +1,46 @@
 .quiz-page {
-    width: 60%;
-    margin: auto;
-    margin-top: 4rem;
+  width: 60%;
+  margin: auto;
+  margin-top: 4rem;
 }
 
 .quiz-timer {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.options-container {
+  padding: 1rem;
+}
+
+.question-card {
+  padding-bottom: 1rem;
+}
+
+.submit-btn {
+  padding-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+:host::ng-deep .p-button {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 4rem;
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
 }

@@ -7,6 +7,6 @@ import { QuizQuestion } from '../../../models/quiz-question.model';
   styleUrl: './quiz-question-card.component.css'
 })
 export class QuizQuestionCardComponent {
-  @Input() question: QuizQuestion | undefined;
-  ingredient!: string;
+  @Input() question: QuizQuestion = {question_id: '', question_text: '', question_type: '', options: []};
+  userResponse: { [questionId: string]: string } = {};
 }

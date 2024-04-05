@@ -5,3 +5,19 @@
 .question-card {
     padding-bottom: 1rem;
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: flex-end;
+  }
