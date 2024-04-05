@@ -25,14 +25,14 @@
     </div>
     <div class="btn-group">
       <div class="upload-btn">
-        <p-button icon="pi pi-upload" (click)="uploadQuizData()" pTooltip="Upload quiz data" type="file"></p-button>
-        <!-- <p-fileUpload
+        <p-fileUpload
           mode="basic"
           chooseIcon="pi pi-upload"
           name="demo[]"
+          (onSelect)="confirmUpload($event)"
+          pTooltip="Upload quiz data"
           accept=".json"
-          (onUpload)="uploadQuizData($any($event))"
-        ></p-fileUpload> -->
+        ></p-fileUpload>
       </div>
       <div class="download-btn">
         <p-button

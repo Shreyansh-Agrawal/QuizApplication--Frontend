@@ -77,21 +77,76 @@ export class QuestionService {
       });
   }
 
-  postQuizData(quizData: any) {
-    // todo: create a model for quizData
-    this.http.post(`${this.baseURL}/categories/questions`, quizData).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-        this.messageService.add({
-          severity: 'error',
-          summary: err.error.message,
-          detail: '',
-        });
-      },
+  removeUnnecessaryCategoryProperties(category: any): void {
+    if (Object.prototype.hasOwnProperty.call(category, 'created_by')) {
+      delete category.created_by;
+    }
+    if (Object.prototype.hasOwnProperty.call(category, 'category_id')) {
+      delete category.category_id;
+    }
+  }
+
+  removeUnnecessaryQuestionProperties(question: any): void {
+    if (Object.prototype.hasOwnProperty.call(question, 'created_by')) {
+      delete question.created_by;
+    }
+    if (Object.prototype.hasOwnProperty.call(question, 'question_id')) {
+      delete question.question_id;
+    }
+  }
+
+  transformQuestionTypeToLowercase(question: any): void {
+    question.question_type = question.question_type.toLowerCase();
+  }
+
+  filterQuestionsWithNullValues(questions: any[]): any[] {
+    return questions.filter(
+      (question) =>
+        Object.values(question).every(
+          (value) => value !== null && value !== undefined
+        ) &&
+        Object.values(question.options).every(
+          (value) => value !== null && value !== undefined
+        )
+    );
+  }
+
+  postQuizData(quizData: QuizData[]): void {
+    quizData.forEach((category) => {
+      this.removeUnnecessaryCategoryProperties(category);
+      category.question_data.forEach((question) => {
+        this.removeUnnecessaryQuestionProperties(question);
+        this.transformQuestionTypeToLowercase(question);
+      });
+      category.question_data = this.filterQuestionsWithNullValues(
+        category.question_data
+      );
     });
+
+    const formattedQuizData = { quiz_data: quizData };
+
+    this.http
+      .post<APIResponse<void>>(
+        `${this.baseURL}/categories/questions`,
+        formattedQuizData
+      )
+      .subscribe({
+        next: (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: res.message,
+            detail: '',
+          });
+        },
+        error: (err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: err.error.message,
+            detail: '',
+          });
+        },
+      });
   }
 
   createQuestion(categoryId: string, questionData: any) {

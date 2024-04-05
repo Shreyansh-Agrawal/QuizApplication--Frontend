@@ -1,8 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { QuestionService } from '../../services/question.service';
-import { QuizData } from '../../models/quiz-data.model';
-import { Question } from '../../models/question.model';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Question } from '../../models/question.model';
+import { QuizData } from '../../models/quiz-data.model';
+import { QuestionService } from '../../services/question.service';
+import { FileUpload } from 'primeng/fileupload';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -11,7 +12,7 @@ interface AutoCompleteCompleteEvent {
 
 interface UploadEvent {
   originalEvent: Event;
-  files: File[];
+  currentFiles: File[];
 }
 
 @Component({
@@ -20,6 +21,7 @@ interface UploadEvent {
   styleUrl: './question-list.component.css',
 })
 export class QuestionListComponent implements OnInit {
+  @ViewChild(FileUpload) fileUpload: FileUpload | undefined;
   quizData: QuizData[] = [];
   selectedCategory: QuizData | undefined;
   filteredCategories: QuizData[] = [];
@@ -77,7 +79,7 @@ export class QuestionListComponent implements OnInit {
     this.filteredQuestions = filtered;
   }
 
-  openCreateQuestionForm(categoryId: string) {
+  openCreateQuestionForm(categoryId?: string) {
     console.log(categoryId);
   }
 
@@ -113,15 +115,36 @@ export class QuestionListComponent implements OnInit {
     });
   }
 
-  uploadQuizData() {
-    console.log("upload");
-    
+  confirmUpload(event: UploadEvent) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to upload the selected file?',
+      accept: () => {
+        this.uploadQuizData(event);
+        this.fileUpload?.clear(); // Clear uploaded files after confirmation
+      },
+      reject: () => {
+        this.fileUpload?.clear(); // Clear uploaded files if user cancels
+      },
+    });
   }
 
-  downloadQuizData(){
-    console.log('down');
-    
+  uploadQuizData(event: UploadEvent) {
+    for (const file of event.currentFiles) {
+      this.readUploadedFile(file);
+    }
+  }
+
+  readUploadedFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const content = reader.result as string;
+      const jsonData = JSON.parse(content);
+      this.questionService.postQuizData(jsonData);
+    };
+    reader.readAsText(file);
+  }
+
+  downloadQuizData() {
     this.questionService.getQuizDataForDownload();
-    
   }
 }

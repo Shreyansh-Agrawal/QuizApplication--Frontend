@@ -1,10 +1,24 @@
 <p-card>
   <div class="card">
-    <div class="category-name">{{ category?.category_name | sliceWords : 0 : 28 }}</div>
+    <div class="category-name">
+      {{ category?.category_name | sliceWords : 0 : 28 }}
+    </div>
     <div class="btn-group" *ngIf="this.userRoleIsAdmin()">
-      <p-button styleClass="btn" icon="pi pi-pencil" severity="warning" (click)="this.updateEvent.emit(category)">
+      <p-button
+        styleClass="btn"
+        icon="pi pi-pencil"
+        severity="warning"
+        (click)="this.updateEvent.emit(category)"
+        [text]="true"
+      >
       </p-button>
-      <p-button icon="pi pi-trash" severity="danger" (click)="this.deleteEvent.emit(category)"> </p-button>
+      <p-button
+        icon="pi pi-trash"
+        severity="danger"
+        (click)="this.deleteEvent.emit(category)"
+        [text]="true"
+      >
+      </p-button>
     </div>
     <div class="custom-design" *ngIf="this.userRoleIsPlayer()">
       <div class="custom-design-content">
