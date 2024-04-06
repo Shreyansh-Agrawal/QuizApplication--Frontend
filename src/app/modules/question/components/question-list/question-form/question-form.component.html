@@ -1,1 +1,121 @@
-<p>create-question works!</p>
+<p-dialog
+  [(visible)]="showQuestionForm"
+  [modal]="true"
+  (onHide)="closeForm()"
+  [styleClass]="'question-form'"
+  header="Category: {{ category?.category }}"
+>
+  <form #questionForm="ngForm" (ngSubmit)="submitForm()">
+    <div class="p-field">
+      <label for="questionText">Question Text: </label>
+      <input
+        id="questionText"
+        type="text"
+        name="question_text"
+        pInputText
+        ngModel
+        required
+        class="p-inputtext"
+      />
+    </div>
+    <div class="p-field">
+      <label for="questionType">Question Type: </label>
+      <p-dropdown
+        [options]="types"
+        [(ngModel)]="selectedType"
+        [showClear]="true"
+        placeholder="Select a type"
+        name="question_type"
+        class="p-dropdown"
+        [required]="true"
+      ></p-dropdown>
+    </div>
+    <div
+      class="p-field"
+      *ngIf="selectedType === 'mcq' || selectedType === 'one-word'"
+    >
+      <label for="answer">Answer: </label>
+      <input
+        type="text"
+        id="answer"
+        name="answer"
+        pInputText
+        ngModel
+        required
+        class="p-inputtext"
+      />
+    </div>
+    <div
+      *ngIf="selectedType === 'true-false'"
+      class="p-field-radiobutton p-field"
+    >
+      <label for="answer_true">Answer: </label>
+      <div class="p-formgroup-inline">
+        <div class="p-field-radiobutton">
+          <p-radioButton
+            name="answer"
+            value="true"
+            ngModel
+            required
+            inputId="answer_true"
+          ></p-radioButton>
+          <label for="answer_true">True</label>
+        </div>
+        <div class="p-field-radiobutton">
+          <p-radioButton
+            name="answer"
+            value="false"
+            ngModel
+            required
+            inputId="answer_false"
+          ></p-radioButton>
+          <label for="answer_false">False</label>
+        </div>
+      </div>
+    </div>
+    <div class="p-field" *ngIf="selectedType === 'mcq'">
+      <label for="option1">Option 1: </label>
+      <input
+        type="text"
+        id="option1"
+        name="option1"
+        pInputText
+        ngModel
+        required
+        class="p-inputtext"
+      />
+    </div>
+    <div class="p-field" *ngIf="selectedType === 'mcq'">
+      <label for="option2">Option 2: </label>
+      <input
+        type="text"
+        id="option2"
+        name="option2"
+        pInputText
+        ngModel
+        required
+        class="p-inputtext"
+      />
+    </div>
+    <div class="p-field" *ngIf="selectedType === 'mcq'">
+      <label for="option3">Option 3: </label>
+      <input
+        type="text"
+        id="option3"
+        name="option3"
+        pInputText
+        ngModel
+        required
+        class="p-inputtext"
+      />
+    </div>
+    <div class="submit-btn">
+      <p-button
+        type="submit"
+        label="Create Question"
+        class="p-button-primary"
+        [disabled]="!questionForm.valid"
+      ></p-button>
+    </div>
+  </form>
+</p-dialog>

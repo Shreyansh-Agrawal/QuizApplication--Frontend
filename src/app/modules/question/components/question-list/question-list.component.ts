@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { FileUpload } from 'primeng/fileupload';
 import { Question } from '../../models/question.model';
 import { QuizData } from '../../models/quiz-data.model';
 import { QuestionService } from '../../services/question.service';
-import { FileUpload } from 'primeng/fileupload';
 
 interface AutoCompleteCompleteEvent {
   originalEvent: Event;
@@ -22,10 +22,11 @@ interface UploadEvent {
 })
 export class QuestionListComponent implements OnInit {
   @ViewChild(FileUpload) fileUpload: FileUpload | undefined;
+  category: QuizData | undefined;
   quizData: QuizData[] = [];
   selectedCategory: QuizData | undefined;
   filteredCategories: QuizData[] = [];
-
+  showQuestionForm = false;
   selectedQuestion: Question | undefined;
   filteredQuestions: Question[] = [];
 
@@ -38,10 +39,6 @@ export class QuestionListComponent implements OnInit {
     this.questionService.getQuizData();
     this.questionService.questionList.subscribe({
       next: (res) => {
-        // const quizData = res.map((item) => ({
-        //   category_id: item.category_id,
-        //   category: item.category,
-        // }));
         this.quizData = res;
       },
     });
@@ -79,8 +76,13 @@ export class QuestionListComponent implements OnInit {
     this.filteredQuestions = filtered;
   }
 
-  openCreateQuestionForm(categoryId?: string) {
-    console.log(categoryId);
+  openCreateQuestionForm(category?: QuizData) {
+    this.category = category;
+    this.showQuestionForm = true;
+  }
+
+  closeQuestionForm() {
+    this.showQuestionForm = false;
   }
 
   handleUpdateQuestion(question?: Question) {
@@ -139,6 +141,8 @@ export class QuestionListComponent implements OnInit {
     reader.onload = () => {
       const content = reader.result as string;
       const jsonData = JSON.parse(content);
+      console.log(jsonData);
+      
       this.questionService.postQuizData(jsonData);
     };
     reader.readAsText(file);

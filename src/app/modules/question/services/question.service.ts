@@ -149,12 +149,16 @@ export class QuestionService {
       });
   }
 
-  createQuestion(categoryId: string, questionData: any) {
+  createQuestion(categoryId?: string, questionData?: any) {
     this.http
-      .post(`${this.baseURL}/categories/${categoryId}/questions`, questionData)
+      .post<APIResponse<void>>(`${this.baseURL}/categories/${categoryId}/questions`, questionData)
       .subscribe({
         next: (res) => {
-          console.log(res);
+          this.messageService.add({
+            severity: 'success',
+            summary: res.message,
+            detail: '',
+          });
         },
         error: (err) => {
           console.log(err);

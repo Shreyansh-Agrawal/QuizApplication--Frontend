@@ -57,7 +57,7 @@
               icon="pi pi-plus"
               severity="success"
               [text]="true"
-              (click)="openCreateQuestionForm(item.category_id)"
+              (click)="openCreateQuestionForm(item)"
             ></p-button>
           </div>
           <app-question-card
@@ -73,3 +73,9 @@
 </div>
 <p>{{ selectedCategory?.category }}</p>
 <p>{{ selectedQuestion?.question_text }}</p>
+
+<app-question-form
+  [showQuestionForm]="showQuestionForm"
+  [category]="category"
+  (closeQuestionForm)="closeQuestionForm()"
+></app-question-form>
