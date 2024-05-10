@@ -2,6 +2,14 @@
 
 Smart Quiz is a comprehensive quiz management system built using Angular. It facilitates quiz creation, management, and participation, catering to users with different roles such as superadmin, admin, and player.
 
+## Deployment
+
+The application is deployed and accessible on https://smartquiz-shreyansh.netlify.app
+
+## Demo
+
+https://github.com/Shreyansh-Agrawal/QuizApplication--Frontend/assets/72445442/ab3a78fd-5446-49ce-be25-af93101e4d4d
+
 ## Features
 
 ### Super-admin
